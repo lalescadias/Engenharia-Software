@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Presenças – Algazarra</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+            <div class="actions">
+                <a href="painel.html">Painel</a>
+                <a href="criancas.html">Crianças</a>
+                <a href="atividades.html">Atividades</a>
+            </div>
+        </nav>
+    </header>
+    <main class="container hero">
+        <section class="card">
+            <h2>Histórico de presenças</h2>
+            <form class="actions" style="margin-bottom:8px">
+                <label for="child">Criança</label>
+                <select id="child">
+                    <option>Selecionar...</option>
+                </select>
+                <label for="month">Mês</label>
+                <input id="month" type="month">
+                <button class="btn btn-primaria" type="submit">Filtrar</button>
+            </form>
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Atividade</th>
+                        <th>Sala</th>
+                        <th>Entrada</th>
+                        <th>Saída</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-07-01</td>
+                        <td>Oficina de Ciência</td>
+                        <td>Sala A</td>
+                        <td>09:00</td>
+                        <td>17:00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer class="footer">© Algazarra OTL</footer>
+</body>
+
+</html>

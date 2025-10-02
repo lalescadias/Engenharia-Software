@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crianças – Algazarra</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+            <div class="actions">
+                <a href="painel.html">Painel</a>
+                <a href="atividades.html">Atividades</a>
+                <a href="presencas.html">Presenças</a>
+            </div>
+        </nav>
+    </header>
+    <main class="container hero">
+        <div class="grid grid-2">
+            <section class="card">
+                <h2>Registar criança</h2>
+                <form>
+                    <label>Nome completo</label>
+                    <input placeholder="Ex: Leonor Silva">
+                    <label>Data de nascimento</label>
+                    <input type="date">
+                    <label>Nº de Utente (SNS) <span class="etiqueta">opcional</span></label>
+                    <input>
+                    <label>Observações de saúde</label>
+                    <textarea rows="3" placeholder="Alergias, contactos de emergência..."></textarea>
+                    <div class="actions"><button class="btn btn-primaria" type="submit">Adicionar</button></div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>As minhas crianças</h2>
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ex: Afonso Sousa</td>
+                            <td>8</td>
+                            <td><button class="btn btn-destaque">Editar</button> <button
+                                    class="btn btn-perigo">Remover</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">© Algazarra OTL</footer>
+</body>
+
+</html>
