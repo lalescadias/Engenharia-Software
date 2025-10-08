@@ -256,3 +256,25 @@ textarea:focus {
 .oculto {
     display: none
 }
+
+.link-secundario {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #41bad1;         
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.link-secundario:hover {
+  color: #005f88;         
+  transform: translateX(2px);
+  text-decoration: underline;
+}
+
+
+form .link-secundario {
+  margin-left: 4px;
+  vertical-align: middle;
+}
