@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Histórico de Presenças • Encarregado • Algazarra</title>
+  <title>Histórico de Presenças • Monitor • Algazarra</title>
   <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body>
@@ -13,7 +13,8 @@
     <div class="actions">
       <a href="painel.html">Painel</a>
       <a href="atividades.html">Atividades</a>
-      <a href="presencas.html" class="ativo">Presenças</a>
+      <a href="presencas.html">Presenças</a>
+      <a href="historico.html" class="ativo">Histórico</a>
       <a href="../index.html" class="btn btn-ghost">Sair</a>
     </div>
   </nav>
@@ -21,22 +22,27 @@
 
 <main class="container hero">
   <section class="card">
-    <h2>Histórico de Presenças</h2>
-    <p>Consulte os dias frequentados pelas suas crianças, horários e observações do monitor.</p>
+    <h2>Histórico de Presenças (Minhas Atividades)</h2>
+    <p>Filtre por atividade e intervalo de datas. Pode exportar/imprimir o resultado.</p>
 
     <form class="grid grid-3" style="margin-top: 1rem;">
       <div>
-        <label>Criança</label>
+        <label>Atividade</label>
         <select>
-          <option>Selecione uma criança</option>
-          <option>Levi Gonçalves</option>
+          <option>Selecione uma atividade</option>
+          <option>Oficina de Ciência</option>
+          <option>Jogos ao Ar Livre</option>
         </select>
       </div>
       <div>
-        <label>Mês</label>
-        <input type="month" value="2025-07">
+        <label>De</label>
+        <input type="date" value="2025-07-01">
       </div>
-      <div class="actions" style="align-self:end;">
+      <div>
+        <label>Até</label>
+        <input type="date" value="2025-07-31">
+      </div>
+      <div class="actions" style="grid-column: span 3;">
         <button class="btn btn-primaria" type="submit">Consultar</button>
         <button class="btn btn-destaque" type="button" onclick="window.print()">Exportar</button>
       </div>
@@ -49,33 +55,29 @@
       <thead>
         <tr>
           <th>Data</th>
-          <th>Atividade</th>
-          <th>Sala</th>
-          <th>Entrada</th>
-          <th>Saída</th>
+          <th>Criança</th>
           <th>Presença</th>
+          <th>Hora Entrada</th>
+          <th>Hora Saída</th>
           <th>Observações</th>
         </tr>
       </thead>
       <tbody>
-    
         <tr>
           <td>04/07/2025</td>
-          <td>Oficina de Ciência</td>
-          <td>Sala A</td>
+          <td>Levi Gonçalves</td>
+          <td><span style="color:green;">✔️</span></td>
           <td>09:00</td>
           <td>17:00</td>
-          <td><span style="color:green;">✔️</span></td>
-          <td>Participou muito bem nas atividades de grupo.</td>
+          <td>Participou nas experiências com entusiasmo.</td>
         </tr>
         <tr>
           <td>05/07/2025</td>
-          <td>Oficina de Ciência</td>
-          <td>Sala A</td>
-          <td>—</td>
-          <td>—</td>
+          <td>Maria Lopes</td>
           <td><span style="color:red;">❌</span></td>
-          <td>Falta justificada por consulta médica.</td>
+          <td>—</td>
+          <td>—</td>
+          <td>Falta justificada por consulta.</td>
         </tr>
       </tbody>
     </table>
