@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin – Utilizadores • Algazarra</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+            <div class="actions">
+                <a href="painel.html">Painel</a>
+                <a href="atividades.html">Atividades</a>
+                <a href="criancas.html">Crianças</a>
+                <a href="presencas.html">Presenças</a>
+                <a href="../index.html" class="btn btn-ghost">Sair</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container hero">
+        <div class="grid grid-2">
+            <section class="card">
+                <h2>Criar novo utilizador</h2>
+                <form>
+                    <label>Nome</label>
+                    <input placeholder="Ex: Carla Monitor">
+                    <label>Email</label>
+                    <input type="email" placeholder="email@exemplo.pt">
+                    <label>Telemóvel</label>
+                    <input type="tel" placeholder="9xx xxx xxx">
+                    <label>Morada</label>
+                    <input placeholder="Rua, nº, localidade">
+                    <label>Perfil</label>
+                    <select>
+                        <option>monitor</option>
+                        <option>admin</option>
+                    </select>
+                    <label>Palavra-passe provisória</label>
+                    <input type="password" placeholder="Ex: 123456">
+
+                    <div class="actions">
+                        <button class="btn btn-primaria" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card">
+                <h2>Lista de utilizadores</h2>
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Perfil</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Carla Monitor</td>
+                            <td>carla@exemplo.pt</td>
+                            <td>monitor</td>
+                            <td><button class="btn btn-perigo">Remover</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">© Algazarra OTL</footer>
+</body>
+
+</html>

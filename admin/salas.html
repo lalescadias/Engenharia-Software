@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin – Salas • Algazarra</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="header">
+  <nav class="nav container">
+    <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+    <div class="actions">
+      <a href="painel.html">Painel</a>
+      <a href="atividades.html">Atividades</a>
+      <a href="criancas.html">Crianças</a>
+      <a href="presencas.html">Presenças</a>
+      <a href="../index.html" class="btn btn-ghost">Sair</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container hero">
+  <div class="grid grid-2">
+    <section class="card">
+      <h2>Criar nova sala</h2>
+      <form>
+        <label>Nome da sala</label>
+        <input placeholder="Ex: Sala A, Campo, Oficina 1">
+        <label>Capacidade máxima</label>
+        <input type="number" min="1" placeholder="Ex: 20">
+        <label>Descrição</label>
+        <textarea rows="3" placeholder="Ex: Sala equipada para atividades de arte e ciência."></textarea>
+        <div class="actions">
+          <button class="btn btn-primaria" type="submit">Guardar sala</button>
+          <button class="btn btn-destaque" type="reset">Limpar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Salas registadas</h2>
+      <table class="tabela">
+        <thead>
+          <tr><th>Nome</th><th>Capacidade</th><th>Descrição</th><th>Ações</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sala A</td>
+            <td>20</td>
+            <td>Espaço principal de atividades</td>
+            <td><button class="btn btn-perigo">Remover</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">© Algazarra OTL</footer>
+</body>
+</html>
