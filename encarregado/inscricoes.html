@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minhas Inscrições • Algazarra</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="header">
+  <nav class="nav container">
+    <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+    <div class="actions">
+      <a href="painel.html">Painel</a>
+      <a href="atividades.html">Atividades</a>
+      <a href="presencas.html">Presenças</a>
+      <a href="inscricoes.html" class="ativo">Minhas Inscrições</a>
+      <a href="../index.html" class="btn btn-ghost">Sair</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container hero">
+  <section class="card">
+    <h2>Minhas Inscrições</h2>
+    <p>Acompanhe o estado das inscrições das suas crianças.</p>
+
+    <table class="tabela" style="margin-top:12px">
+      <thead>
+        <tr>
+          <th>Criança</th>
+          <th>Atividade</th>
+          <th>Período</th>
+          <th>Estado</th>
+          <th>Pediu em</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Levi Gonçalves</td>
+          <td>Oficina de Ciência</td>
+          <td>01–05 Jul</td>
+          <td><span class="etiqueta estado-pendente">Pendente</span></td>
+          <td>24/06/2025</td>
+          <td>
+            <button class="btn btn-perigo">Cancelar</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Levi Gonçalves</td>
+          <td>Jogos ao Ar Livre</td>
+          <td>08–12 Jul</td>
+          <td><span class="etiqueta estado-confirmada">Confirmada</span></td>
+          <td>25/06/2025</td>
+          <td>
+            <!-- Quando confirmada, sem ações ou apenas "Ver detalhes" -->
+            <button class="btn btn-destaque">Ver detalhes</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Levi Gonçalves</td>
+          <td>Artes & Reciclagem</td>
+          <td>15–19 Jul</td>
+          <td><span class="etiqueta estado-cancelada">Cancelada</span></td>
+          <td>26/06/2025</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer class="footer">© Algazarra OTL</footer>
+</body>
+</html>

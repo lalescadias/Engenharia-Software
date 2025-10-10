@@ -1,87 +1,91 @@
 <!doctype html>
 <html lang="pt-PT">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Histórico de Presenças • Encarregado • Algazarra</title>
   <link rel="stylesheet" href="../assets/styles.css">
 </head>
+
 <body>
-<header class="header">
-  <nav class="nav container">
-    <div class="marca"><span class="logo"></span> OTL Algazarra</div>
-    <div class="actions">
-      <a href="painel.html">Painel</a>
-      <a href="atividades.html">Atividades</a>
-      <a href="presencas.html" class="ativo">Presenças</a>
-      <a href="../index.html" class="btn btn-ghost">Sair</a>
-    </div>
-  </nav>
-</header>
-
-<main class="container hero">
-  <section class="card">
-    <h2>Histórico de Presenças</h2>
-    <p>Consulte os dias frequentados pelas suas crianças, horários e observações do monitor.</p>
-
-    <form class="grid grid-3" style="margin-top: 1rem;">
-      <div>
-        <label>Criança</label>
-        <select>
-          <option>Selecione uma criança</option>
-          <option>Levi Gonçalves</option>
-        </select>
+  <header class="header">
+    <nav class="nav container">
+      <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+      <div class="actions">
+        <a href="painel.html">Painel</a>
+        <a href="atividades.html">Atividades</a>
+        <a href="presencas.html">Presenças</a>
+        <a href="inscricoes.html" class="ativo">Minhas Inscrições</a>
+        <a href="../index.html" class="btn btn-ghost">Sair</a>
       </div>
-      <div>
-        <label>Mês</label>
-        <input type="month" value="2025-07">
-      </div>
-      <div class="actions" style="align-self:end;">
-        <button class="btn btn-primaria" type="submit">Consultar</button>
-        <button class="btn btn-destaque" type="button" onclick="window.print()">Exportar</button>
-      </div>
-    </form>
-  </section>
+    </nav>
+  </header>
 
-  <section class="card">
-    <h3>Presenças registadas</h3>
-    <table class="tabela">
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Atividade</th>
-          <th>Sala</th>
-          <th>Entrada</th>
-          <th>Saída</th>
-          <th>Presença</th>
-          <th>Observações</th>
-        </tr>
-      </thead>
-      <tbody>
-    
-        <tr>
-          <td>04/07/2025</td>
-          <td>Oficina de Ciência</td>
-          <td>Sala A</td>
-          <td>09:00</td>
-          <td>17:00</td>
-          <td><span style="color:green;">✔️</span></td>
-          <td>Participou muito bem nas atividades de grupo.</td>
-        </tr>
-        <tr>
-          <td>05/07/2025</td>
-          <td>Oficina de Ciência</td>
-          <td>Sala A</td>
-          <td>—</td>
-          <td>—</td>
-          <td><span style="color:red;">❌</span></td>
-          <td>Falta justificada por consulta médica.</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-</main>
+  <main class="container hero">
+    <section class="card">
+      <h2>Histórico de Presenças</h2>
+      <p>Consulte os dias frequentados pelas suas crianças, horários e observações do monitor.</p>
 
-<footer class="footer">© Algazarra OTL</footer>
+      <form class="grid grid-3" style="margin-top: 1rem;">
+        <div>
+          <label>Criança</label>
+          <select>
+            <option>Selecione uma criança</option>
+            <option>Levi Gonçalves</option>
+          </select>
+        </div>
+        <div>
+          <label>Mês</label>
+          <input type="month" value="2025-07">
+        </div>
+        <div class="actions" style="align-self:end;">
+          <button class="btn btn-primaria" type="submit">Consultar</button>
+          <button class="btn btn-destaque" type="button" onclick="window.print()">Exportar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3>Presenças registadas</h3>
+      <table class="tabela">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Atividade</th>
+            <th>Sala</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+            <th>Presença</th>
+            <th>Observações</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td>04/07/2025</td>
+            <td>Oficina de Ciência</td>
+            <td>Sala A</td>
+            <td>09:00</td>
+            <td>17:00</td>
+            <td><span style="color:green;">✔️</span></td>
+            <td>Participou muito bem nas atividades de grupo.</td>
+          </tr>
+          <tr>
+            <td>05/07/2025</td>
+            <td>Oficina de Ciência</td>
+            <td>Sala A</td>
+            <td>—</td>
+            <td>—</td>
+            <td><span style="color:red;">❌</span></td>
+            <td>Falta justificada por consulta médica.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="footer">© Algazarra OTL</footer>
 </body>
+
 </html>
