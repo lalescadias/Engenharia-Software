@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inscrições • Admin • Algazarra</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="header">
+  <nav class="nav container">
+    <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+    <div class="actions">
+      <a href="painel.html">Painel</a>
+      <a href="atividades.html">Atividades</a>
+      <a href="criancas.html">Crianças</a>
+      <a href="presencas.html">Presenças</a>
+      <a href="inscricoes.html" class="ativo">Inscrições</a>
+      <a href="historico.html">Histórico</a>
+      <a href="salas.html">Salas</a>
+      <a href="utilizadores.html">Utilizadores</a>
+      <a href="../index.html" class="btn btn-ghost">Sair</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container hero">
+  <!-- Filtros -->
+  <section class="card">
+    <h2>Gestão de Inscrições</h2>
+    <p>Confirme ou rejeite pedidos e acompanhe o estado por atividade.</p>
+
+    <form class="grid grid-4" style="margin-top: 1rem;">
+      <div>
+        <label>Atividade</label>
+        <select>
+          <option>Todas</option>
+          <option>Oficina de Ciência</option>
+          <option>Jogos ao Ar Livre</option>
+          <option>Artes & Reciclagem</option>
+        </select>
+      </div>
+      <div>
+        <label>Estado</label>
+        <select>
+          <option>Todos</option>
+          <option>Pendente</option>
+          <option>Confirmada</option>
+          <option>Cancelada</option>
+        </select>
+      </div>
+      <div>
+        <label>De</label>
+        <input type="date">
+      </div>
+      <div>
+        <label>Até</label>
+        <input type="date">
+      </div>
+      <div class="actions" style="grid-column: span 4;">
+        <button class="btn btn-primaria" type="submit">Aplicar filtros</button>
+        <button class="btn btn-destaque" type="button" onclick="window.print()">Exportar</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Pendentes em destaque -->
+  <section class="card">
+    <h3>Pendentes de Aprovação</h3>
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th>Data do pedido</th>
+          <th>Criança</th>
+          <th>Atividade</th>
+          <th>Período</th>
+          <th>Estado</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>24/06/2025</td>
+          <td>Levi Gonçalves</td>
+          <td>Oficina de Ciência</td>
+          <td>01–05 Jul</td>
+          <td><span class="etiqueta estado-pendente">Pendente</span></td>
+          <td>
+            <button class="btn btn-primaria">Confirmar</button>
+            <button class="btn btn-perigo">Rejeitar</button>
+          </td>
+        </tr>
+        <tr>
+          <td>26/06/2025</td>
+          <td>Maria Lopes</td>
+          <td>Artes & Reciclagem</td>
+          <td>15–19 Jul</td>
+          <td><span class="etiqueta estado-pendente">Pendente</span></td>
+          <td>
+            <button class="btn btn-primaria">Confirmar</button>
+            <button class="btn btn-perigo">Rejeitar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Todas as inscrições -->
+  <section class="card">
+    <h3>Todas as Inscrições</h3>
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th>Pediu em</th>
+          <th>Criança</th>
+          <th>Atividade</th>
+          <th>Período</th>
+          <th>Estado</th>
+          <th>Observações</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>25/06/2025</td>
+          <td>Levi Gonçalves</td>
+          <td>Jogos ao Ar Livre</td>
+          <td>08–12 Jul</td>
+          <td><span class="etiqueta estado-confirmada">Confirmada</span></td>
+          <td>—</td>
+          <td>
+            <button class="btn btn-destaque">Ver detalhes</button>
+            <button class="btn btn-perigo">Cancelar</button>
+          </td>
+        </tr>
+        <tr>
+          <td>26/06/2025</td>
+          <td>Levi Gonçalves</td>
+          <td>Artes & Reciclagem</td>
+          <td>15–19 Jul</td>
+          <td><span class="etiqueta estado-cancelada">Cancelada</span></td>
+          <td>Indisponibilidade nas datas.</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer class="footer">© Algazarra OTL</footer>
+</body>
+</html>

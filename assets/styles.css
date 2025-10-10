@@ -20,8 +20,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    font-family: Inter, system-u
-    i, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: Inter, system-u i, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     background: var(--fundo);
     color: var(--texto)
 }
@@ -259,23 +258,44 @@ textarea:focus {
 }
 
 .link-secundario {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: 0.9rem;
-  color: #41bad1;         
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.9rem;
+    color: #41bad1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .link-secundario:hover {
-  color: #005f88;         
-  transform: translateX(2px);
-  text-decoration: underline;
+    color: #005f88;
+    transform: translateX(2px);
+    text-decoration: underline;
 }
 
 
 form .link-secundario {
-  margin-left: 4px;
-  vertical-align: middle;
+    margin-left: 4px;
+    vertical-align: middle;
 }
+
+.estado-pendente {
+    background: #FFF3CD;
+    color: #7A5B00;
+}
+
+.estado-confirmada {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+.estado-cancelada {
+    background: #F8D7DA;
+    color: #721C24;
+}
+
+.actions a.ativo {
+    text-decoration: underline;
+    opacity: 1;
+}
+
