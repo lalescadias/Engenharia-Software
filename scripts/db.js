@@ -20,12 +20,6 @@ dbReady = new Promise((resolve, reject) => {
       store.createIndex("email", "email", { unique: true });
     }
 
-    // --- Tabela de Encarregados ---
-    if (!db.objectStoreNames.contains("encarregados")) {
-      const store = db.createObjectStore("encarregados", { keyPath: "id", autoIncrement: true });
-      store.createIndex("email", "email", { unique: true });
-    }
-
     // --- Tabela de Crianças ---
     if (!db.objectStoreNames.contains("criancas")) {
       const store = db.createObjectStore("criancas", { keyPath: "id", autoIncrement: true });
