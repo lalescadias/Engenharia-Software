@@ -12,57 +12,67 @@
   <header class="header">
     <nav class="nav container">
       <div class="marca"><span class="logo"></span> OTL Algazarra</div>
-       <div class="actions">
-      <a href="painel.html">Painel</a>
-      <a href="atividades.html" class="ativo">Atividades</a>
-      <a href="criancas.html">Crianças</a>
-      <a href="presencas.html">Presenças</a>
-      <a href="inscricoes.html" >Inscrições</a>
-      <a href="historico.html">Histórico</a>
-      <a href="salas.html">Salas</a>
-      <a href="utilizadores.html">Utilizadores</a>
-      <a href="../index.html" class="btn btn-ghost">Sair</a>
-    </div>
+      <div class="actions">
+        <a href="painel.html">Painel</a>
+        <a href="atividades.html" class="ativo">Atividades</a>
+        <a href="criancas.html">Crianças</a>
+        <a href="presencas.html">Presenças</a>
+        <a href="inscricoes.html">Inscrições</a>
+        <a href="historico.html">Histórico</a>
+        <a href="salas.html">Salas</a>
+        <a href="utilizadores.html">Utilizadores</a>
+        <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
+
+      </div>
     </nav>
   </header>
   <main class="container hero">
     <div class="grid grid-2">
       <section class="card">
         <h2>Criar nova atividade</h2>
-        <form>
+        <form id="formAtividade">
           <label>Título</label>
-          <input placeholder="Ex: Oficina de Ciência">
+          <input id="titulo" placeholder="Ex: Oficina de Ciência" required>
+
           <label>Descrição</label>
-          <textarea rows="3" placeholder="Breve descrição"></textarea>
+          <textarea id="descricao" rows="3" placeholder="Breve descrição"></textarea>
+
           <label>Imagem (URL)</label>
-          <input placeholder="https://...">
+          <input id="imagem" placeholder="https://...">
+
           <div class="grid grid-2">
             <div>
               <label>Início</label>
-              <input type="date">
+              <input type="date" id="dataInicio" required>
             </div>
             <div>
               <label>Fim</label>
-              <input type="date">
+              <input type="date" id="dataFim" required>
             </div>
           </div>
+
           <div class="grid grid-2">
             <div>
               <label>Hora de entrada</label>
-              <input type="time" value="09:00">
+              <input type="time" id="horaEntrada" value="09:00">
             </div>
             <div>
               <label>Hora de saída</label>
-              <input type="time" value="17:00">
+              <input type="time" id="horaSaida" value="17:00">
             </div>
           </div>
+
           <label>Lotação máxima</label>
-          <input type="number" min="1" value="20">
+          <input type="number" id="lotacao" min="1" value="20" required>
+
+          <label>Monitor responsável</label>
+          <select id="monitorResponsavel">
+            <option value="">Selecione...</option>
+          </select>
+
           <label>Sala</label>
-          <select>
-            <option>Sala A</option>
-            <option>Sala Criativa</option>
-            <option>Campo</option>
+          <select id="sala">
+            <option value="">Selecione...</option>
           </select>
           <a href="salas.html" class="link-secundario">+ Criar nova sala</a>
 
@@ -71,6 +81,10 @@
             <button class="btn btn-destaque" type="reset">Limpar</button>
           </div>
         </form>
+
+        <!-- Tabela -->
+        <tbody id="listaAtividades"></tbody>
+
       </section>
 
       <section class="card">
@@ -85,18 +99,7 @@
               <th>Ações</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Oficina de Ciência</td>
-              <td>01–05 Jul</td>
-              <td>Sala A</td>
-              <td>20</td>
-              <td>
-                <button class="btn btn-destaque">Editar</button>
-                <button class="btn btn-perigo">Remover</button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="listaAtividades"></tbody>
         </table>
       </section>
 
@@ -104,6 +107,10 @@
     </div>
   </main>
   <footer class="footer">© Algazarra OTL</footer>
+  <script src="../scripts/db.js"></script>
+  <script src="../scripts/sessao.js"></script>
+  <script src="../scripts/atividades_admin.js"></script>
+
 </body>
 
 </html>

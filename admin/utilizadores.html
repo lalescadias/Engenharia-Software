@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin – Utilizadores • Algazarra</title>
     <link rel="stylesheet" href="../assets/styles.css">
+
+
 </head>
 
 <body>
@@ -17,11 +19,11 @@
                 <a href="atividades.html">Atividades</a>
                 <a href="criancas.html">Crianças</a>
                 <a href="presencas.html">Presenças</a>
-                <a href="inscricoes.html" >Inscrições</a>
+                <a href="inscricoes.html">Inscrições</a>
                 <a href="historico.html">Histórico</a>
                 <a href="salas.html">Salas</a>
                 <a href="utilizadores.html" class="ativo">Utilizadores</a>
-                <a href="../index.html" class="btn btn-ghost">Sair</a>
+                <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
             </div>
         </nav>
     </header>
@@ -30,22 +32,29 @@
         <div class="grid grid-2">
             <section class="card">
                 <h2>Criar novo utilizador</h2>
-                <form>
+                <form id="formUtilizador">
                     <label>Nome</label>
-                    <input placeholder="Ex: Carla Monitor">
+                    <input id="nome" placeholder="Ex: Carla Monitor" required>
+
                     <label>Email</label>
-                    <input type="email" placeholder="email@exemplo.pt">
+                    <input id="email" type="email" placeholder="email@exemplo.pt" required>
+
                     <label>Telemóvel</label>
-                    <input type="tel" placeholder="9xx xxx xxx">
+                    <input id="telemovel" type="tel" placeholder="9xx xxx xxx">
+
                     <label>Morada</label>
-                    <input placeholder="Rua, nº, localidade">
+                    <input id="morada" placeholder="Rua, nº, localidade">
+
                     <label>Perfil</label>
-                    <select>
-                        <option>monitor</option>
-                        <option>admin</option>
-                    </select>
+                    <div style="max-width: 160px;">
+                        <select id="perfil" style="width: 100%; padding: 6px;">
+                            <option value="monitor">Monitor</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+
                     <label>Palavra-passe provisória</label>
-                    <input type="password" placeholder="Ex: 123456">
+                    <input id="senha" type="password" placeholder="Ex: 123456" required>
 
                     <div class="actions">
                         <button class="btn btn-primaria" type="submit">Guardar</button>
@@ -55,29 +64,27 @@
 
             <section class="card">
                 <h2>Lista de utilizadores</h2>
-                <table class="tabela">
+                <table class="tabela tabela-utilizadores">
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Email</th>
                             <th>Perfil</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Carla Monitor</td>
-                            <td>carla@exemplo.pt</td>
-                            <td>monitor</td>
-                            <td><button class="btn btn-perigo">Remover</button></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="listaUtilizadores"></tbody>
                 </table>
             </section>
         </div>
     </main>
 
+
+
     <footer class="footer">© Algazarra OTL</footer>
+
+    <script src="../scripts/db.js"></script>
+    <script src="../scripts/sessao.js"></script>
+    <script src="../scripts/utilizadores_admin.js"></script>
 </body>
 
 </html>

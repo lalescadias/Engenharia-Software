@@ -19,24 +19,31 @@
         <section class="card" style="max-width:720px;width:100%">
             <h1>Criar conta</h1>
             <div class="grid grid-2">
-                <form>
+                <form id="formRegisto">
                     <h3>Dados do encarregado</h3>
                     <label>Nome</label>
-                    <input placeholder="Nome completo">
+                    <input id="nome" placeholder="Nome completo" required>
+
                     <label>Email</label>
-                    <input type="email" placeholder="email@exemplo.pt">
+                    <input id="email" type="email" placeholder="email@exemplo.pt" required>
+
                     <label>Telemóvel</label>
-                    <input type="tel" placeholder="9xx xxx xxx">
+                    <input id="telemovel" type="tel" placeholder="9xx xxx xxx">
+
                     <label>Morada</label>
-                    <input placeholder="Rua, nº, localidade">
+                    <input id="morada" placeholder="Rua, nº, localidade">
+
                     <label>Palavra-passe</label>
-                    <input type="password" placeholder="Crie uma palavra‑passe">
+                    <input id="senha" type="password" placeholder="Crie uma palavra-passe" required>
 
                     <label>Confirmar palavra-passe</label>
-                    <input type="password" placeholder="Repita a palavra‑passe">
+                    <input id="confirmarSenha" type="password" placeholder="Repita a palavra-passe" required>
 
-                    <div class="actions"><button class="btn btn-primaria" type="submit">Registar</button></div>
+                    <div class="actions">
+                        <button class="btn btn-primaria" type="submit">Registar</button>
+                    </div>
                 </form>
+
                 <div class="card" style="background:white">
                     <h3>Vantagens</h3>
                     <p>• Inscrições 100% digitais</p>
@@ -47,6 +54,9 @@
         </section>
     </main>
     <footer class="footer">© Algazarra OTL</footer>
+    <script src="scripts/db.js"></script>
+    <script src="scripts/registo.js"></script>
+
 </body>
 
 </html>

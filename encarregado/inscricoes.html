@@ -18,7 +18,8 @@
         <a href="criancas.html" >Crianças</a>
         <a href="presencas.html" >Presenças</a>
         <a href="inscricoes.html" class="ativo">Minhas Inscrições</a>
-        <a href="../index.html" class="btn btn-ghost">Sair</a>
+        <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
+
       </div>
     </nav>
   </header>
@@ -39,42 +40,19 @@
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Levi Gonçalves</td>
-            <td>Oficina de Ciência</td>
-            <td>01–05 Jul</td>
-            <td><span class="etiqueta estado-pendente">Pendente</span></td>
-            <td>24/06/2025</td>
-            <td>
-              <button class="btn btn-perigo">Cancelar</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Levi Gonçalves</td>
-            <td>Jogos ao Ar Livre</td>
-            <td>08–12 Jul</td>
-            <td><span class="etiqueta estado-confirmada">Confirmada</span></td>
-            <td>25/06/2025</td>
-            <td>
-              <!-- Quando confirmada, sem ações ou apenas "Ver detalhes" -->
-              <button class="btn btn-destaque">Ver detalhes</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Levi Gonçalves</td>
-            <td>Artes & Reciclagem</td>
-            <td>15–19 Jul</td>
-            <td><span class="etiqueta estado-cancelada">Cancelada</span></td>
-            <td>26/06/2025</td>
-            <td>—</td>
-          </tr>
-        </tbody>
+       <tbody id="listaInscricoes"></tbody>
+
       </table>
     </section>
   </main>
 
   <footer class="footer">© Algazarra OTL</footer>
+
+  <script src="../scripts/db.js"></script>
+<script src="../scripts/sessao.js"></script>
+<script src="../scripts/inscricoes_encarregados.js"></script>
+
+
 </body>
 
 </html>

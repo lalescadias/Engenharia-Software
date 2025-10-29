@@ -2,65 +2,79 @@
 <html lang="pt-PT">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crianças – Algazarra</title>
-    <link rel="stylesheet" href="../assets/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crianças – Algazarra</title>
+  <link rel="stylesheet" href="../assets/styles.css">
 </head>
 
 <body>
-    <header class="header">
-        <nav class="nav container">
-            <div class="marca"><span class="logo"></span> OTL Algazarra</div>
-            <div class="actions">
-                <a href="painel.html">Painel</a>
-                <a href="atividades.html">Atividades</a>
-                <a href="criancas.html" class="ativo" >Crianças</a>
-                <a href="presencas.html">Presenças</a>
-                <a href="inscricoes.html" >Minhas Inscrições</a>
-                <a href="../index.html" class="btn btn-ghost">Sair</a>
-            </div>
-        </nav>
-    </header>
-    <main class="container hero">
-        <div class="grid grid-2">
-            <section class="card">
-                <h2>Registar criança</h2>
-                <form>
-                    <label>Nome completo</label>
-                    <input placeholder="Ex: Leonor Silva">
-                    <label>Data de nascimento</label>
-                    <input type="date">
-                    <label>Nº de Utente (SNS) <span class="etiqueta">opcional</span></label>
-                    <input>
-                    <label>Observações de saúde</label>
-                    <textarea rows="3" placeholder="Alergias, contactos de emergência..."></textarea>
-                    <div class="actions"><button class="btn btn-primaria" type="submit">Adicionar</button></div>
-                </form>
-            </section>
-            <section class="card">
-                <h2>As minhas crianças</h2>
-                <table class="tabela">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Idade</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Ex: Afonso Sousa</td>
-                            <td>8</td>
-                            <td><button class="btn btn-destaque">Editar</button> <button
-                                    class="btn btn-perigo">Remover</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-    </main>
-    <footer class="footer">© Algazarra OTL</footer>
+  <header class="header">
+    <nav class="nav container">
+      <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+      <div class="actions">
+        <a href="painel.html">Painel</a>
+        <a href="atividades.html">Atividades</a>
+        <a href="criancas.html" class="ativo">Crianças</a>
+        <a href="presencas.html">Presenças</a>
+        <a href="inscricoes.html">Minhas Inscrições</a>
+        <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container hero">
+    <div class="grid grid-2">
+      <!-- REGISTAR CRIANÇA -->
+      <section class="card">
+        <h2>Registar criança</h2>
+
+        <form id="formCrianca">
+          <label>Nome completo</label>
+          <input id="nome" placeholder="Ex: Leonor Silva" required>
+
+          <label>Data de nascimento</label>
+          <input id="dataNascimento" type="date" required>
+
+          <label>Nº de Utente (SNS) <span class="etiqueta">opcional</span></label>
+          <input id="sns">
+
+          <label>Observações de saúde</label>
+          <textarea id="observacoes" rows="3" placeholder="Alergias, contactos de emergência..."></textarea>
+
+          <label class="checkbox-label">
+            <input id="autorizacaoImagem" type="checkbox">
+            Autorizo a utilização de fotografias e vídeos da criança para fins institucionais do ATL.
+          </label>
+
+          <div class="actions">
+            <button class="btn btn-primaria" type="submit">Adicionar</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- LISTA DE CRIANÇAS -->
+      <section class="card">
+        <h2>As minhas crianças</h2>
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th style="width: 180px; text-align: center;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="listaCriancas"></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">© Algazarra OTL</footer>
+
+  <!-- Scripts -->
+  <script src="../scripts/db.js"></script>
+  <script src="../scripts/sessao.js"></script>
+  <script src="../scripts/criancas_encarregado.js"></script>
 </body>
 
 </html>

@@ -22,18 +22,12 @@
     <main class="container center">
         <section class="card" style="max-width:520px;width:100%">
             <h1>Entrar</h1>
-            <p class="kicker">Área de encarregados e administradores</p>
-            <form>
+             <form id="formLogin">
                 <label for="email">Email</label>
                 <input id="email" name="email" type="email" placeholder="ex: joana@mail.com">
                 <label for="senha">Palavra‑passe</label>
                 <input id="senha" name="senha" type="password" placeholder="••••••••">
                 <label for="perfil">Entrar como</label>
-                <select id="perfil" name="perfil">
-                    <option value="encarregado">Encarregado de educação</option>
-                    <option value="monitor">Monitor</option>
-                    <option value="admin">Administrador</option>
-                </select>
                 <div class="actions">
                     <button class="btn btn-primaria" type="submit">Entrar</button>
                     <a class="btn btn-destaque" href="registo.html">Criar conta</a>
@@ -44,6 +38,8 @@
 
 
     <footer class="footer">© Algazarra OTL</footer>
+    <script src="scripts/db.js"></script>
+    <script src="scripts/login.js"></script>
 </body>
 
 </html>

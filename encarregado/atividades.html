@@ -18,57 +18,20 @@
                 <a href="criancas.html" >Crianças</a>
                 <a href="presencas.html">Presenças</a>
                 <a href="inscricoes.html" >Minhas Inscrições</a>
-                <a href="../index.html" class="btn btn-ghost">Sair</a>
+                <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
+
             </div>
         </nav>
     </header>
     <main class="container hero">
-        <div class="grid grid-3">
-            <article class="card">
-                <img src="https://picsum.photos/seed/atl1/600/300" alt="Imagem da atividade"
-                    style="width:100%;border-radius:12px;margin-bottom:10px">
-                <h3>Oficina de Ciência</h3>
-                <p class="kicker">01–05 Jul • Sala A • Lotação 20</p>
-                <p>Experiências divertidas e seguras para despertar a curiosidade!</p>
-                <form class="stack">
-                    <label>Criança</label>
-                    <select>
-                        <option>Selecionar...</option>
-                    </select>
-                    <div class="actions"><button class="btn btn-primaria" type="submit">Inscrever</button></div>
-                </form>
-            </article>
-            <article class="card">
-                <img src="https://picsum.photos/seed/atl2/600/300" alt="Imagem da atividade"
-                    style="width:100%;border-radius:12px;margin-bottom:10px">
-                <h3>Artes & Reciclagem</h3>
-                <p class="kicker">08–12 Jul • Sala Criativa • Lotação 15</p>
-                <p>Reutilizar materiais e criar peças artísticas.</p>
-                <form class="stack">
-                    <label>Criança</label>
-                    <select>
-                        <option>Selecionar...</option>
-                    </select>
-                    <div class="actions"><button class="btn btn-primaria" type="submit">Inscrever</button></div>
-                </form>
-            </article>
-            <article class="card">
-                <img src="https://picsum.photos/seed/atl3/600/300" alt="Imagem da atividade"
-                    style="width:100%;border-radius:12px;margin-bottom:10px">
-                <h3>Desportos ao Ar Livre</h3>
-                <p class="kicker">15–19 Jul • Campo • Lotação 25</p>
-                <p>Jogos cooperativos e muita energia!</p>
-                <form class="stack">
-                    <label>Criança</label>
-                    <select>
-                        <option>Selecionar...</option>
-                    </select>
-                    <div class="actions"><button class="btn btn-primaria" type="submit">Inscrever</button></div>
-                </form>
-            </article>
-        </div>
+        <div class="grid grid-3" id="listaAtividades"></div>
+
     </main>
     <footer class="footer">© Algazarra OTL</footer>
+    <script src="../scripts/db.js"></script>
+    <script src="../scripts/sessao.js"></script>
+    <script src="../scripts/atividades_encarregado.js"></script>
+
 </body>
 
 </html>
