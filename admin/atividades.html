@@ -22,12 +22,13 @@
         <a href="salas.html">Salas</a>
         <a href="utilizadores.html">Utilizadores</a>
         <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
-
       </div>
     </nav>
   </header>
+
   <main class="container hero">
     <div class="grid grid-2">
+      <!-- 🟩 Secção: Criar nova atividade -->
       <section class="card">
         <h2>Criar nova atividade</h2>
         <form id="formAtividade">
@@ -63,7 +64,7 @@
           </div>
 
           <label>Lotação máxima</label>
-          <input type="number" id="lotacao" min="1" value="20" required>
+          <input type="number" id="lotacao" min="1" value="20" max="30" required>
 
           <label>Monitor responsável</label>
           <select id="monitorResponsavel">
@@ -81,12 +82,9 @@
             <button class="btn btn-destaque" type="reset">Limpar</button>
           </div>
         </form>
-
-        <!-- Tabela -->
-        <tbody id="listaAtividades"></tbody>
-
       </section>
 
+      <!-- 🟨 Secção: Lista de atividades -->
       <section class="card">
         <h2>Atividades existentes</h2>
         <table class="tabela">
@@ -102,15 +100,15 @@
           <tbody id="listaAtividades"></tbody>
         </table>
       </section>
-
-
     </div>
   </main>
+
   <footer class="footer">© Algazarra OTL</footer>
+
+  <!-- Scripts -->
   <script src="../scripts/db.js"></script>
   <script src="../scripts/sessao.js"></script>
   <script src="../scripts/atividades_admin.js"></script>
 
 </body>
-
 </html>
