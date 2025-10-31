@@ -113,7 +113,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const acao = btn.dataset.acao;
 
     if (acao === "remover") {
-      if (!confirm("Deseja remover esta atividade?")) return;
+      const confirmar = await confirmarAcao("Deseja remover esta atividade?");
+      if (!confirmar) return;
       const tx = db.transaction(["atividades"], "readwrite");
       tx.objectStore("atividades").delete(id);
       tx.oncomplete = () => renderLista();

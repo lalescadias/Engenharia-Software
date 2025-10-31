@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let btnCancelar = null;
   let modoEdicao = null;
 
-  // SUBMIT (Adicionar / Atualizar) 
+  // SUBMIT (Adicionar / Atualizar)
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // 🔹 Validação: impedir datas futuras e menores de 3 anos
+    // Validação de idade e data
     const hoje = new Date();
     const nascimento = new Date(dataNascimento);
 
@@ -43,11 +43,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       hoje.getFullYear() - nascimento.getFullYear() -
       (hoje.getMonth() < nascimento.getMonth() ||
         (hoje.getMonth() === nascimento.getMonth() && hoje.getDate() < nascimento.getDate())
-        ? 1
-        : 0);
+        ? 1 : 0);
 
     if (idade < 3) {
-      mostrarAlerta("A criança deve ter pelo menos 3 anos de idade para ser registada!", "erro");
+      mostrarAlerta("A criança deve ter pelo menos 3 anos!", "erro");
       return;
     }
 
@@ -63,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         sns,
         observacoes,
         autorizacaoImagem,
-        ativa: true, // nova propriedade
+        ativa: true,
         criadoEm: new Date().toISOString()
       });
       mostrarAlerta("Criança adicionada!", "sucesso");
@@ -73,7 +72,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderLista();
   });
 
-  // ATUALIZAR CRIANÇA 
   async function atualizarCrianca(id, novosDados) {
     const todas = await getAll("criancas");
     const c = todas.find(x => x.id === id);
@@ -84,7 +82,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     tx.objectStore("criancas").put(c);
   }
 
-  // CANCELAR EDIÇÃO
   function cancelarEdicao() {
     modoEdicao = null;
     form.reset();
@@ -95,50 +92,62 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // REMOVER / DESATIVAR CRIANÇA
-  async function removerCrianca(id) {
-    if (!confirm("Tem certeza que deseja remover esta criança?")) return;
-    const dbx = await dbReady;
+  // Remover / Desativar / Reativar
+  async function alternarEstadoCrianca(id, ativar = false) {
+  const dbx = await dbReady;
+  const todas = await getAll("criancas");
+  const crianca = todas.find(c => c.id === id);
+  if (!crianca) return;
 
-    // Verifica dependências antes de apagar
-    const inscricoes = await getAll("inscricoes");
-    const presencas = await getAll("presencas");
+  // Reativar
+  if (ativar) {
+    crianca.ativa = true;
+    const tx = dbx.transaction("criancas", "readwrite");
+    tx.objectStore("criancas").put(crianca);
+    tx.oncomplete = () => {
+      mostrarAlerta("Criança reativada com sucesso!", "sucesso");
+      renderLista();
+    };
+    return;
+  }
 
-    const temLigacoes =
-      inscricoes.some(i => i.idCrianca === id) ||
-      presencas.some(p => p.idCrianca === id);
+  // Verifica se há vínculos
+  const inscricoes = await getAll("inscricoes");
+  const presencas = await getAll("presencas");
+  const temLigacoes =
+    inscricoes.some(i => i.idCrianca === id) ||
+    presencas.some(p => p.idCrianca === id);
 
-    if (temLigacoes) {
-      //  Em vez de apagar, marca como inativa e cancela inscrições
-      const todas = await getAll("criancas");
-      const crianca = todas.find(c => c.id === id);
-      if (!crianca) return;
+  // Mensagem dinâmica conforme o caso
+  const mensagem = temLigacoes
+    ? "Esta criança já participou de atividades. Deseja desativá-la e cancelar suas inscrições?"
+    : "Tem certeza que deseja remover esta criança definitivamente?";
 
-      crianca.ativa = false; // desativa
-      const txCriancas = dbx.transaction("criancas", "readwrite");
-      txCriancas.objectStore("criancas").put(crianca);
+  const confirmar = await confirmarAcao(mensagem, "erro");
+  if (!confirmar) return;
 
-      // Atualiza inscrições da criança
-      const inscricoesAtualizadas = inscricoes.map(i => {
-        if (i.idCrianca === id && i.estado !== "Cancelada") {
-          i.estado = "Cancelada";
-          i.dataCancelamento = new Date().toISOString();
-        }
-        return i;
-      });
+  if (temLigacoes) {
+    // Apenas desativa e cancela inscrições
+    crianca.ativa = false;
+    const tx = dbx.transaction("criancas", "readwrite");
+    tx.objectStore("criancas").put(crianca);
 
-      const txInscricoes = dbx.transaction("inscricoes", "readwrite");
-      const store = txInscricoes.objectStore("inscricoes");
-      inscricoesAtualizadas.forEach(i => store.put(i));
+    const txInscricoes = dbx.transaction("inscricoes", "readwrite");
+    const store = txInscricoes.objectStore("inscricoes");
+    inscricoes.forEach(i => {
+      if (i.idCrianca === id && i.estado !== "Cancelada") {
+        i.estado = "Cancelada";
+        i.dataCancelamento = new Date().toISOString();
+        store.put(i);
+      }
+    });
 
-      txInscricoes.oncomplete = () => {
-        mostrarAlerta("Esta criança participou de atividades; foi desativada e suas inscrições foram canceladas.", "info");
-        renderLista();
-      };
-      return;
-    }
-
-    // Caso não tenha participações, pode remover normalmente
+    txInscricoes.oncomplete = () => {
+      mostrarAlerta("Criança desativada e inscrições canceladas.", "info");
+      renderLista();
+    };
+  } else {
+    // Remove totalmente
     const tx = dbx.transaction("criancas", "readwrite");
     tx.objectStore("criancas").delete(id);
     tx.oncomplete = () => {
@@ -146,58 +155,79 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderLista();
     };
   }
+}
 
-  // RENDERIZAR LISTA
+
+  // Render lista
   async function renderLista() {
     const todas = await getAll("criancas");
-    const minhas = todas
-      .filter(c => c.idEncarregado === userSessao.id)
-      .filter(c => c.ativa !== false); // apenas ativas
+    const minhas = todas.filter(c => c.idEncarregado === userSessao.id);
+    const inscricoes = await getAll("inscricoes");
+    const presencas = await getAll("presencas");
 
     lista.innerHTML = "";
+
     if (minhas.length === 0) {
-      lista.innerHTML = `<tr><td colspan="2" style="text-align:center;">Nenhuma criança registada.</td></tr>`;
+      lista.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma criança registada.</td></tr>`;
       return;
     }
 
     minhas.forEach(c => {
       const tr = document.createElement("tr");
+
+      const temLigacoes =
+        inscricoes.some(i => i.idCrianca === c.id) ||
+        presencas.some(p => p.idCrianca === c.id);
+
       tr.innerHTML = `
         <td>${c.nome}</td>
+        <td>${c.ativa ? "Ativa" : "<span style='color:red;'>Inativa</span>"}</td>
         <td>
           <div class="acoes-crianca">
-            <button class="btn btn-destaque editar">Editar</button>
-            <button class="btn btn-perigo remover">Remover</button>
+            ${
+              c.ativa
+                ? `
+                    <button class="btn btn-destaque editar">Editar</button>
+                    ${
+                      temLigacoes
+                        ? `<button class="btn btn-perigo remover">Desativar</button>`
+                        : `<button class="btn btn-perigo remover">Remover</button>`
+                    }
+                  `
+                : `<button class="btn btn-primaria ativar">Ativar</button>`
+            }
           </div>
         </td>
       `;
 
-      //  Edição
-      tr.querySelector(".editar").onclick = () => {
-        modoEdicao = c.id;
-        document.getElementById("nome").value = c.nome;
-        document.getElementById("dataNascimento").value = c.dataNascimento;
-        document.getElementById("sns").value = c.sns || "";
-        document.getElementById("observacoes").value = c.observacoes || "";
-        document.getElementById("autorizacaoImagem").checked = c.autorizacaoImagem;
+      if (c.ativa) {
+        tr.querySelector(".editar").onclick = () => {
+          modoEdicao = c.id;
+          document.getElementById("nome").value = c.nome;
+          document.getElementById("dataNascimento").value = c.dataNascimento;
+          document.getElementById("sns").value = c.sns || "";
+          document.getElementById("observacoes").value = c.observacoes || "";
+          document.getElementById("autorizacaoImagem").checked = c.autorizacaoImagem;
+          btnSubmit.textContent = "Atualizar";
 
-        btnSubmit.textContent = "Atualizar";
+          if (!btnCancelar) {
+            btnCancelar = document.createElement("button");
+            btnCancelar.type = "button";
+            btnCancelar.textContent = "Cancelar";
+            btnCancelar.className = "btn btn-secundaria";
+            btnCancelar.style.marginLeft = "10px";
+            btnSubmit.after(btnCancelar);
+            btnCancelar.onclick = cancelarEdicao;
+          }
 
-        if (!btnCancelar) {
-          btnCancelar = document.createElement("button");
-          btnCancelar.type = "button";
-          btnCancelar.textContent = "Cancelar";
-          btnCancelar.className = "btn btn-secundaria";
-          btnCancelar.style.marginLeft = "10px";
-          btnSubmit.after(btnCancelar);
-          btnCancelar.onclick = cancelarEdicao;
-        }
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
 
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      };
+        tr.querySelector(".remover").onclick = () => alternarEstadoCrianca(c.id, false);
+      } else {
+        tr.querySelector(".ativar").onclick = () => alternarEstadoCrianca(c.id, true);
+      }
 
-      //  Remover / Desativar
-      tr.querySelector(".remover").onclick = () => removerCrianca(c.id);
       lista.appendChild(tr);
     });
   }

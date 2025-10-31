@@ -67,7 +67,8 @@ lista.addEventListener("click", async (e) => {
   if (!btn) return;
 
   const id = Number(btn.dataset.id);
-  if (!confirm("Tem certeza que deseja cancelar esta inscrição?")) return;
+  const confirmar = await confirmarAcao("Tem certeza que deseja cancelar esta inscrição?");
+  if (!confirmar) return;
 
   // Obter a inscrição diretamente
   const inscricoes = await getAll("inscricoes");

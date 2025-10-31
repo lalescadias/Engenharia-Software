@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function carregarAtividades() {
     const atividades = await getAll("atividades");
-    const criancas = (await getAll("criancas")).filter(c => c.idEncarregado === userSessao.id);
+    const criancas = (await getAll("criancas")).filter(c => c.idEncarregado === userSessao.id && c.ativa !== false);
+
 
     lista.innerHTML = "";
 

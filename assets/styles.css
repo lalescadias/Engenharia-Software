@@ -377,3 +377,9 @@ form .link-secundario {
 @keyframes fadeOut {
   to { opacity: 0; }
 }
+.modal-alerta .botoes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1rem;
+}

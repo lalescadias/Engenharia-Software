@@ -58,12 +58,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           return;
         }
 
-        if (confirm("Tem a certeza que deseja remover este utilizador?")) {
-          const tx = db.transaction("utilizadores", "readwrite");
-          tx.objectStore("utilizadores").delete(id);
-          await new Promise((r) => (tx.oncomplete = r));
-          renderUtilizadores();
-        }
+        const confirmar = await confirmarAcao("Tem a certeza que deseja remover este utilizador?", "erro");
+        if (!confirmar) return;
+
+        const tx = db.transaction("utilizadores", "readwrite");
+        tx.objectStore("utilizadores").delete(id);
+        await new Promise((r) => (tx.oncomplete = r));
+        mostrarAlerta("Utilizador removido com sucesso!", "sucesso");
+        renderUtilizadores();
+
       };
     });
   }

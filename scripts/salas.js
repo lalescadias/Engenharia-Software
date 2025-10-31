@@ -61,7 +61,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function removerSala(id) {
-    if (!confirm("Tem certeza que deseja remover esta sala?")) return;
+    const confirmar = await confirmarAcao("Tem certeza que deseja remover esta sala?");
+    if (!confirmar) return;
+
     const dbx = await dbReady;
     const tx = dbx.transaction("salas", "readwrite");
     tx.objectStore("salas").delete(id);
