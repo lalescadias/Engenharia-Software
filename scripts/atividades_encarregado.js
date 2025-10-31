@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </form>
       `;
 
-      // 📌 Inscrição direta
+      // Inscrição direta
       const form = card.querySelector("form");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();

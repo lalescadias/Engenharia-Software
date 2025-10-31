@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const listaPresencas = document.getElementById("listaPresencas");
   const btnGuardar = document.getElementById("btnGuardar");
 
-  // 🔹 Carregar lista de atividades existentes
+  //  Carregar lista de atividades existentes
   const atividades = await getAll("atividades");
   atividades.forEach(a => {
     const opt = document.createElement("option");
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     selectAtividade.appendChild(opt);
   });
 
-  // 🔹 Quando o monitor clicar em "Carregar lista"
+  //  Quando o monitor clicar em "Carregar lista"
   formSelecionar.addEventListener("submit", async (e) => {
     e.preventDefault();
     const idAtividade = Number(selectAtividade.value);

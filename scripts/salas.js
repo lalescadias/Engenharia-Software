@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let modoEdicao = null;
   let btnCancelar = null;
 
-  // ➕ Adicionar / Atualizar sala
+  //  Adicionar / Atualizar sala
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 

@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ========= Helpers =========
 
-  // ✅ reset “de verdade” que mantém selects populados e sai do modo edição
+  //  reset “de verdade” que mantém selects populados e sai do modo edição
   function limparForm({ zerarTudo = true } = {}) {
     form.reset();
 
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // ✅ carrega salas usando o campo que tens na store: nomeSala
+  // carrega salas usando o campo que tens na store: nomeSala
   async function carregarSalas() {
     const salas = await getAll("salas");
     selectSala.innerHTML = `<option value="">Selecione...</option>`;
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ✅ carrega apenas perfis "monitor"
+  // carrega apenas perfis "monitor"
   async function carregarMonitores() {
     const utilizadores = await getAll("utilizadores");
     const monitores = utilizadores.filter(u => u.perfil === "monitor");
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ✅ render robusto (sem mexer no card do formulário)
+  // render lista
   async function renderLista() {
     const atividades = await getAll("atividades");
     tbody.innerHTML = "";
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ========= Eventos =========
 
-  // ✅ delegação (editar/remover)
+  //  delegação (editar/remover)
   tbody.addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-acao]");
     if (!btn) return;
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("horaSaida").value = a.horaSaida || "17:00";
       document.getElementById("lotacao").value = a.lotacao ?? 20;
 
-      // ✅ se a sala/monitor original não existir mais nas opções, cria opção “fantasma” só para exibir
+      //  se a sala/monitor original não existir mais nas opções, cria opção “fantasma” só para exibir
       if (a.sala) {
         if (![...selectSala.options].some(o => o.value === a.sala)) {
           const opt = new Option(a.sala, a.sala);
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ✅ criar/atualizar com validações de negócio
+  // criar/atualizar com validações de negócio
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ✅ botão “Limpar” do formulário
+  // botão “Limpar” do formulário
   form.addEventListener("reset", async (e) => {
     e.preventDefault();
     limparForm();              // limpa e mantém selects

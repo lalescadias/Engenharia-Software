@@ -4,7 +4,7 @@
 const DB_NAME = "AlgazarraDB";
 const DB_VERSION = 1;
 let db;
-let dbReady; // ✅ adicionamos a Promise global
+let dbReady; 
 
 // Cria e abre a base
 dbReady = new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ dbReady = new Promise((resolve, reject) => {
   request.onsuccess = (event) => {
     db = event.target.result;
     console.log("IndexedDB pronto:", db.name);
-    resolve(db); // ✅ agora dbReady sabe quando terminou
+    resolve(db); 
   };
 
   request.onerror = (event) => {
@@ -91,7 +91,7 @@ async function getAll(storeName) {
 }
 
 ///////////// e para criar admin 
-// 🔹 Criar admin padrão se ainda não existir
+//  Criar admin padrão se ainda não existir
 dbReady.then(async () => {
   const utilizadores = await getAll("utilizadores");
   const existeAdmin = utilizadores.some(u => u.perfil === "admin");
