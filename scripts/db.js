@@ -14,13 +14,13 @@ dbReady = new Promise((resolve, reject) => {
     db = event.target.result;
     console.log("A criar/atualizar base de dados...");
 
-    // --- Tabela de Utilizadores ---
+    //  Tabela de Utilizadores 
     if (!db.objectStoreNames.contains("utilizadores")) {
       const store = db.createObjectStore("utilizadores", { keyPath: "id", autoIncrement: true });
       store.createIndex("email", "email", { unique: true });
     }
 
-    // --- Tabela de Crianças ---
+    //  Tabela de Crianças
     if (!db.objectStoreNames.contains("criancas")) {
       const store = db.createObjectStore("criancas", { keyPath: "id", autoIncrement: true });
       store.createIndex("idEncarregado", "idEncarregado");
@@ -30,7 +30,7 @@ dbReady = new Promise((resolve, reject) => {
       const store = db.createObjectStore("atividades", { keyPath: "id", autoIncrement: true });
       store.createIndex("idMonitor", "idMonitor");
     }
-    // --- Outras tabelas ---
+    // Outras tabelas
     const outras = ["inscricoes", "presencas", "salas"];
     outras.forEach(nome => {
       if (!db.objectStoreNames.contains(nome)) {
@@ -51,7 +51,7 @@ dbReady = new Promise((resolve, reject) => {
   };
 });
 
-// -------- Funções genéricas para usar nas páginas --------
+//  Funções genéricas para usar nas páginas
 
 // Adicionar dado
 async function addItem(storeName, data) {
@@ -106,7 +106,7 @@ dbReady.then(async () => {
       perfil: "admin"
     };
     await addItem("utilizadores", admin);
-    console.log("✅ Admin criado: admin@algazarra.pt / admin123");
+    console.log("Admin criado: admin@algazarra.pt / admin123");
   }
 });
 

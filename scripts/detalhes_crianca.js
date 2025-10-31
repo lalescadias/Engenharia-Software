@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const corpo = document.getElementById("listaInscricoes");
 
   if (!crianca) {
-    info.innerHTML = "<p>❌ Criança não encontrada.</p>";
+    info.innerHTML = "<p> Criança não encontrada.</p>";
     return;
   }
 

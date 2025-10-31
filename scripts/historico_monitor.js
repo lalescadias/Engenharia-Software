@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let atividadesMonitor = [];
 
-  // --- Carregar atividades do monitor ---
+  // Carregar atividades do monitor
   async function carregarAtividades() {
     const atividades = await getAll("atividades");
     atividadesMonitor = atividades.filter(a => a.idMonitor === userSessao.id);
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // --- Consultar histórico ---
+  // Consultar histórico
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 

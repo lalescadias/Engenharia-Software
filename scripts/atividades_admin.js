@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
-  // ---- Guarda de sessão ----
+  //  Guarda de sessão 
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "admin") {
     alert("Acesso restrito a administradores!");
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // ---- Referências ----
+  // Referências
   const form = document.getElementById("formAtividade");
   const tbody = document.getElementById("listaAtividades");
   const selectSala = document.getElementById("sala");
@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btnSubmit = form.querySelector("button[type='submit']");
   let btnCancelar = null;
 
-  // ========= Helpers =========
+  // Helpers 
 
-  //  reset “de verdade” que mantém selects populados e sai do modo edição
+  // Limpa o formulário
   function limparForm({ zerarTudo = true } = {}) {
     form.reset();
 
@@ -103,7 +103,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ========= Eventos =========
 
   //  delegação (editar/remover)
   tbody.addEventListener("click", async (e) => {
@@ -127,7 +126,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const a = atividades.find(x => x.id === id);
       if (!a) return;
 
-      // ✅ garante que os selects estão populados antes de setar o valor
+      //  carregar salas e monitores para garantir que selects estão atualizados
       await carregarSalas();
       await carregarMonitores();
 
@@ -141,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("horaSaida").value = a.horaSaida || "17:00";
       document.getElementById("lotacao").value = a.lotacao ?? 20;
 
-      //  se a sala/monitor original não existir mais nas opções, cria opção “fantasma” só para exibir
+      //  Selecionar sala e monitor (adiciona opção se necessário)
       if (a.sala) {
         if (![...selectSala.options].some(o => o.value === a.sala)) {
           const opt = new Option(a.sala, a.sala);

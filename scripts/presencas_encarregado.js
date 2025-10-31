@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let todasPresencas = [];
   let todasCriancas = [];
 
-  // --- Carrega dados iniciais ---
+  // Carrega dados iniciais
   async function carregarFiltros() {
     todasAtividades = await getAll("atividades");
     todasPresencas = await getAll("presencas");
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // --- Consultar ---
+  // Consultar
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 

@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
-  // --- Sessão e acesso ---
+  // Sessão e acesso
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "monitor") {
     alert("Acesso restrito a monitores!");
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // --- Referências HTML ---
+  // Referências HTML
   const selectAtividade = document.getElementById("selectAtividade");
   const dataPresenca = document.getElementById("dataPresenca");
   const lista = document.getElementById("listaPresencas");
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let atividadesDoMonitor = [];
   let inscricoesAtuais = [];
 
-  // --- Carregar atividades do monitor ---
+  // Carregar atividades do monitor
   async function carregarAtividades() {
     const todas = await getAll("atividades");
     atividadesDoMonitor = todas.filter(a => a.idMonitor === userSessao.id);
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // --- Carregar lista de presenças ---
+  // Carregar lista de presenças
   async function carregarLista(idAtividade, data) {
     lista.innerHTML = "";
     btnGuardar.disabled = true;
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     btnGuardar.disabled = false;
   }
 
-  // --- Ao selecionar atividade + data ---
+  // Ao selecionar atividade + data
   formSelecionar.addEventListener("submit", async (e) => {
     e.preventDefault();
     const idAtividade = Number(selectAtividade.value);
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await carregarLista(idAtividade, data);
   });
 
-  // --- Guardar presenças ---
+  // Guardar presenças
   btnGuardar.addEventListener("click", async () => {
     const idAtividade = Number(selectAtividade.value);
     const data = dataPresenca.value;
@@ -139,6 +139,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     tx.onerror = () => alert("Erro ao guardar presenças.");
   });
 
-  // --- Inicialização ---
+  // Inicialização
   await carregarAtividades();
 });

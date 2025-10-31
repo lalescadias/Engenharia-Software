@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let btnCancelar = null;
   let modoEdicao = null;
 
-  // ====== SUBMIT (Adicionar / Atualizar) ======
+  // SUBMIT (Adicionar / Atualizar) 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         sns,
         observacoes,
         autorizacaoImagem,
-        ativa: true, // ✅ nova propriedade
+        ativa: true, // nova propriedade
         criadoEm: new Date().toISOString()
       });
       alert("Criança adicionada!");
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderLista();
   });
 
-  // ====== ATUALIZAR CRIANÇA ======
+  // ATUALIZAR CRIANÇA 
   async function atualizarCrianca(id, novosDados) {
     const todas = await getAll("criancas");
     const c = todas.find(x => x.id === id);
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     tx.objectStore("criancas").put(c);
   }
 
-  // ====== CANCELAR EDIÇÃO ======
+  // CANCELAR EDIÇÃO
   function cancelarEdicao() {
     modoEdicao = null;
     form.reset();
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // ====== REMOVER / DESATIVAR CRIANÇA ======
+  // REMOVER / DESATIVAR CRIANÇA
   async function removerCrianca(id) {
     if (!confirm("Tem certeza que deseja remover esta criança?")) return;
     const dbx = await dbReady;
@@ -108,16 +108,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       presencas.some(p => p.idCrianca === id);
 
     if (temLigacoes) {
-      // ⚠️ Em vez de apagar, marca como inativa e cancela inscrições
+      //  Em vez de apagar, marca como inativa e cancela inscrições
       const todas = await getAll("criancas");
       const crianca = todas.find(c => c.id === id);
       if (!crianca) return;
 
-      crianca.ativa = false; // 🚫 desativa
+      crianca.ativa = false; // desativa
       const txCriancas = dbx.transaction("criancas", "readwrite");
       txCriancas.objectStore("criancas").put(crianca);
 
-      // 🟡 Atualiza inscrições da criança
+      // Atualiza inscrições da criança
       const inscricoesAtualizadas = inscricoes.map(i => {
         if (i.idCrianca === id && i.estado !== "Cancelada") {
           i.estado = "Cancelada";
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // ✅ Caso não tenha participações, pode remover normalmente
+    // Caso não tenha participações, pode remover normalmente
     const tx = dbx.transaction("criancas", "readwrite");
     tx.objectStore("criancas").delete(id);
     tx.oncomplete = () => {
@@ -146,12 +146,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
   }
 
-  // ====== RENDERIZAR LISTA ======
+  // RENDERIZAR LISTA
   async function renderLista() {
     const todas = await getAll("criancas");
     const minhas = todas
       .filter(c => c.idEncarregado === userSessao.id)
-      .filter(c => c.ativa !== false); // 👈 apenas ativas
+      .filter(c => c.ativa !== false); // apenas ativas
 
     lista.innerHTML = "";
     if (minhas.length === 0) {
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </td>
       `;
 
-      // 🟡 Edição
+      //  Edição
       tr.querySelector(".editar").onclick = () => {
         modoEdicao = c.id;
         document.getElementById("nome").value = c.nome;
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
 
-      // 🔴 Remover / Desativar
+      //  Remover / Desativar
       tr.querySelector(".remover").onclick = () => removerCrianca(c.id);
       lista.appendChild(tr);
     });

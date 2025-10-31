@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
-  // --- Sessão ---
+  // Sessão 
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "monitor") {
     alert("Acesso restrito a monitores!");
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const tbody = document.querySelector("tbody");
 
-  // --- Carrega atividades atribuídas ---
+  //  Carrega atividades atribuídas 
   async function carregarAtividades() {
     const atividades = await getAll("atividades");
     const inscricoes = await getAll("inscricoes");
