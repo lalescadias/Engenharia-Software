@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
+
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao) {
     alert("Sessão expirada!");
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let btnCancelar = null;
   let modoEdicao = null;
 
-  // Adicionar ou atualizar
+  // ====== SUBMIT (Adicionar / Atualizar) ======
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -25,6 +26,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!nome || !dataNascimento) {
       alert("Preencha o nome e a data de nascimento!");
+      return;
+    }
+
+    // 🔹 Validação: impedir datas futuras e menores de 3 anos
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+
+    if (nascimento > hoje) {
+      alert("A data de nascimento não pode ser no futuro!");
+      return;
+    }
+
+    const idade =
+      hoje.getFullYear() - nascimento.getFullYear() -
+      (hoje.getMonth() < nascimento.getMonth() ||
+        (hoje.getMonth() === nascimento.getMonth() && hoje.getDate() < nascimento.getDate())
+        ? 1
+        : 0);
+
+    if (idade < 3) {
+      alert("A criança deve ter pelo menos 3 anos de idade para ser registada!");
       return;
     }
 
@@ -40,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         sns,
         observacoes,
         autorizacaoImagem,
+        ativa: true, // ✅ nova propriedade
         criadoEm: new Date().toISOString()
       });
       alert("Criança adicionada!");
@@ -49,6 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderLista();
   });
 
+  // ====== ATUALIZAR CRIANÇA ======
   async function atualizarCrianca(id, novosDados) {
     const todas = await getAll("criancas");
     const c = todas.find(x => x.id === id);
@@ -59,6 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     tx.objectStore("criancas").put(c);
   }
 
+  // ====== CANCELAR EDIÇÃO ======
   function cancelarEdicao() {
     modoEdicao = null;
     form.reset();
@@ -69,17 +94,64 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  // ====== REMOVER / DESATIVAR CRIANÇA ======
   async function removerCrianca(id) {
     if (!confirm("Tem certeza que deseja remover esta criança?")) return;
     const dbx = await dbReady;
+
+    // Verifica dependências antes de apagar
+    const inscricoes = await getAll("inscricoes");
+    const presencas = await getAll("presencas");
+
+    const temLigacoes =
+      inscricoes.some(i => i.idCrianca === id) ||
+      presencas.some(p => p.idCrianca === id);
+
+    if (temLigacoes) {
+      // ⚠️ Em vez de apagar, marca como inativa e cancela inscrições
+      const todas = await getAll("criancas");
+      const crianca = todas.find(c => c.id === id);
+      if (!crianca) return;
+
+      crianca.ativa = false; // 🚫 desativa
+      const txCriancas = dbx.transaction("criancas", "readwrite");
+      txCriancas.objectStore("criancas").put(crianca);
+
+      // 🟡 Atualiza inscrições da criança
+      const inscricoesAtualizadas = inscricoes.map(i => {
+        if (i.idCrianca === id && i.estado !== "Cancelada") {
+          i.estado = "Cancelada";
+          i.dataCancelamento = new Date().toISOString();
+        }
+        return i;
+      });
+
+      const txInscricoes = dbx.transaction("inscricoes", "readwrite");
+      const store = txInscricoes.objectStore("inscricoes");
+      inscricoesAtualizadas.forEach(i => store.put(i));
+
+      txInscricoes.oncomplete = () => {
+        alert("Esta criança participou de atividades; foi desativada e suas inscrições foram canceladas.");
+        renderLista();
+      };
+      return;
+    }
+
+    // ✅ Caso não tenha participações, pode remover normalmente
     const tx = dbx.transaction("criancas", "readwrite");
     tx.objectStore("criancas").delete(id);
-    renderLista();
+    tx.oncomplete = () => {
+      alert("Criança removida com sucesso!");
+      renderLista();
+    };
   }
 
+  // ====== RENDERIZAR LISTA ======
   async function renderLista() {
     const todas = await getAll("criancas");
-    const minhas = todas.filter(c => c.idEncarregado === userSessao.id);
+    const minhas = todas
+      .filter(c => c.idEncarregado === userSessao.id)
+      .filter(c => c.ativa !== false); // 👈 apenas ativas
 
     lista.innerHTML = "";
     if (minhas.length === 0) {
@@ -99,6 +171,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </td>
       `;
 
+      // 🟡 Edição
       tr.querySelector(".editar").onclick = () => {
         modoEdicao = c.id;
         document.getElementById("nome").value = c.nome;
@@ -122,10 +195,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
 
+      // 🔴 Remover / Desativar
       tr.querySelector(".remover").onclick = () => removerCrianca(c.id);
       lista.appendChild(tr);
     });
   }
 
-  renderLista();
+  await renderLista();
 });

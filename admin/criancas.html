@@ -10,37 +10,42 @@
 <header class="header">
   <nav class="nav container">
     <div class="marca"><span class="logo"></span> OTL Algazarra</div>
-   <div class="actions">
+    <div class="actions">
       <a href="painel.html">Painel</a>
       <a href="atividades.html">Atividades</a>
       <a href="criancas.html" class="ativo">Crianças</a>
-      <a href="presencas.html">Presenças</a>
-      <a href="inscricoes.html" >Inscrições</a>
+      <a href="inscricoes.html">Inscrições</a>
       <a href="historico.html">Histórico</a>
       <a href="salas.html">Salas</a>
       <a href="utilizadores.html">Utilizadores</a>
       <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
-
     </div>
   </nav>
 </header>
+
 <main class="container hero">
   <section class="card">
-    <h2>Lista de crianças</h2>
+    <h2>Lista de crianças registadas</h2>
+    <p>Consulte todas as crianças criadas pelos encarregados e veja os seus detalhes completos.</p>
+
     <table class="tabela">
-      <thead><tr><th>Nome</th><th>Idade</th><th>Inscrições</th><th>Ações</th></tr></thead>
-      <tbody>
+      <thead>
         <tr>
-          <td>Afonso Sousa</td><td>8</td>
-          <td><span class="tag">Oficina de Ciência</span> <span class="tag">Desportos</span></td>
-          <td><button class="btn btn-destaque">Ver detalhe</button></td>
+          <th>Nome</th>
+          <th>Idade</th>
+          <th>Ações</th>
         </tr>
+      </thead>
+      <tbody id="listaCriancas">
+        <tr><td colspan="3" style="text-align:center;">A carregar...</td></tr>
       </tbody>
     </table>
   </section>
 </main>
-<footer class="footer">© Algazarra OTL</footer>
 
-  <script src="../scripts/sessao.js"></script>
+<footer class="footer">© Algazarra OTL</footer>
+<script src="../scripts/db.js"></script>
+<script src="../scripts/sessao.js"></script>
+<script src="../scripts/criancas_admin.js"></script>
 </body>
 </html>

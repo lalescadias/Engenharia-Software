@@ -10,74 +10,96 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const lista = document.getElementById("listaInscricoes");
 
-  async function renderInscricoes() {
+  async function carregarInscricoes() {
     const inscricoes = await getAll("inscricoes");
-    const criancas = await getAll("criancas");
+    const criancas = (await getAll("criancas")).filter(c => c.idEncarregado === userSessao.id);
     const atividades = await getAll("atividades");
 
-    // filtra apenas as inscrições das crianças deste encarregado
-    const minhasInscricoes = inscricoes.filter((i) =>
-      criancas.some((c) => c.id === i.idCrianca && c.idEncarregado === userSessao.id)
+    // apenas as do encarregado logado
+    const minhas = inscricoes.filter(i =>
+      criancas.some(c => c.id === i.idCrianca)
     );
 
     lista.innerHTML = "";
 
-    if (minhasInscricoes.length === 0) {
-      lista.innerHTML = `<tr><td colspan="6" style="text-align:center;">Sem inscrições registadas.</td></tr>`;
+    if (minhas.length === 0) {
+      lista.innerHTML = `<tr><td colspan="6" style="text-align:center;">Nenhuma inscrição encontrada.</td></tr>`;
       return;
     }
 
-    minhasInscricoes.forEach((i) => {
-      const crianca = criancas.find((c) => c.id === i.idCrianca);
-      const atividade = atividades.find((a) => a.id === i.idAtividade);
+    minhas.forEach(i => {
+      const crianca = criancas.find(c => c.id === i.idCrianca);
+      const atividade = atividades.find(a => a.id === i.idAtividade);
 
-      const nomeCrianca = crianca?.nome || "—";
-      const nomeAtividade = atividade?.titulo || "—";
+      const dataPed = new Date(i.dataInscricao).toLocaleDateString("pt-PT");
+      const inicio = new Date(atividade.dataInicio).toLocaleDateString("pt-PT", { day: "2-digit", month: "short" });
+      const fim = new Date(atividade.dataFim).toLocaleDateString("pt-PT", { day: "2-digit", month: "short" });
 
-      const dataInicio = atividade?.dataInicio
-        ? new Date(atividade.dataInicio).toLocaleDateString("pt-PT", { day: "2-digit", month: "short" })
-        : "";
-      const dataFim = atividade?.dataFim
-        ? new Date(atividade.dataFim).toLocaleDateString("pt-PT", { day: "2-digit", month: "short" })
-        : "";
-      const periodo = `${dataInicio} – ${dataFim}`;
-      const dataPedido = new Date(i.dataInscricao).toLocaleDateString("pt-PT");
-
-      let estadoClasse = "estado-pendente";
-      if (i.estado === "Confirmada") estadoClasse = "estado-confirmada";
-      if (i.estado === "Cancelada") estadoClasse = "estado-cancelada";
+      // Estado visual
+      const etiqueta = {
+        "Pendente": "estado-pendente",
+        "Confirmada": "estado-confirmada",
+        "Cancelada": "estado-cancelada"
+      }[i.estado] || "";
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${nomeCrianca}</td>
-        <td>${nomeAtividade}</td>
-        <td>${periodo}</td>
-        <td><span class="etiqueta ${estadoClasse}">${i.estado}</span></td>
-        <td>${dataPedido}</td>
-        <td>${
-          i.estado === "Pendente"
-            ? `<button class="btn btn-perigo cancelar">Cancelar</button>`
-            : i.estado === "Confirmada"
-            ? `<button class="btn btn-destaque">Ver detalhes</button>`
-            : "—"
-        }</td>
+        <td>${crianca?.nome || "—"}</td>
+        <td>${atividade?.titulo || "—"}</td>
+        <td>${inicio} – ${fim}</td>
+        <td><span class="etiqueta ${etiqueta}">${i.estado}</span></td>
+        <td>${dataPed}</td>
+        <td>
+          ${i.estado === "Cancelada"
+            ? "—"
+            : `<button class="btn btn-perigo" data-id="${i.id}">Cancelar</button>`}
+        </td>
       `;
-
-      if (i.estado === "Pendente") {
-        tr.querySelector(".cancelar").onclick = async () => {
-          if (!confirm("Deseja cancelar esta inscrição?")) return;
-          const dbx = await dbReady;
-          const tx = dbx.transaction("inscricoes", "readwrite");
-          const store = tx.objectStore("inscricoes");
-          i.estado = "Cancelada";
-          store.put(i);
-          renderInscricoes();
-        };
-      }
-
       lista.appendChild(tr);
     });
   }
 
-  await renderInscricoes();
+  // Evento de cancelamento
+  // Evento de cancelamento
+lista.addEventListener("click", async (e) => {
+  const btn = e.target.closest("button[data-id]");
+  if (!btn) return;
+
+  const id = Number(btn.dataset.id);
+  if (!confirm("Tem certeza que deseja cancelar esta inscrição?")) return;
+
+  // Obter a inscrição diretamente
+  const inscricoes = await getAll("inscricoes");
+  const insc = inscricoes.find(i => i.id === id);
+  if (!insc) {
+    alert("Inscrição não encontrada!");
+    return;
+  }
+
+  // Atualiza os dados localmente
+  insc.estado = "Cancelada";
+  insc.dataCancelamento = new Date().toISOString();
+
+  try {
+    // Abre uma nova transação ativa para salvar
+    const database = await dbReady;
+    const tx = database.transaction(["inscricoes"], "readwrite");
+    const store = tx.objectStore("inscricoes");
+
+    await new Promise((resolve, reject) => {
+      const req = store.put(insc);
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+    });
+
+    alert("Inscrição cancelada com sucesso!");
+    await carregarInscricoes();
+  } catch (err) {
+    console.error("Erro ao atualizar inscrição:", err);
+    alert("Ocorreu um erro ao cancelar a inscrição.");
+  }
+});
+  // Carregar inscrições ao iniciar
+  await carregarInscricoes();
+
 });
