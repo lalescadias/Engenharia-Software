@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "admin") {
-    alert("Acesso restrito a administradores!");
+    mostrarAlerta("Acesso restrito a administradores!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -23,17 +23,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const descricaoSala = document.getElementById("descricaoSala").value.trim();
 
     if (!nomeSala || capacidade < 1) {
-      alert("Preencha o nome e a capacidade!");
+      mostrarAlerta("Preencha o nome e a capacidade!", "erro");
       return;
     }
 
     if (modoEdicao) {
       await atualizarSala(modoEdicao, { nomeSala, capacidade, descricaoSala });
-      alert("Sala atualizada!");
+      mostrarAlerta("Sala atualizada!", "sucesso");
       cancelarEdicao();
     } else {
       await addItem("salas", { nomeSala, capacidade, descricaoSala });
-      alert("Sala criada com sucesso!");
+      mostrarAlerta("Sala criada com sucesso!", "sucesso");
     }
 
     form.reset();

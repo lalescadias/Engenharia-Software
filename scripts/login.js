@@ -8,27 +8,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const senha = document.getElementById("senha").value;
 
     if (!db) {
-      alert("Base de dados ainda a carregar, tente novamente.");
+      mostrarAlerta("Base de dados ainda a carregar, tente novamente.", "erro");
       return;
     }
 
     const user = await getByIndex("utilizadores", "email", email);
 
     if (!user || user.senha !== senha) {
-      alert("Credenciais inválidas.");
+      mostrarAlerta("Credenciais inválidas.", "erro");
       return;
     }
 
     localStorage.setItem("userSessao", JSON.stringify(user));
-    alert(`Bem-vindo(a), ${user.nome}!`);
+    mostrarAlerta(`Bem-vindo(a), ${user.nome}!`, "sucesso");
 
-    // Redireciona conforme o perfil
-    if (user.perfil === "admin") {
-      window.location.href = "admin/painel.html";
-    } else if (user.perfil === "monitor") {
-      window.location.href = "monitor/painel.html";
-    } else {
-      window.location.href = "encarregado/painel.html";
-    }
+    setTimeout(() => {
+      if (user.perfil === "admin") {
+        window.location.href = "admin/painel.html";
+      } else if (user.perfil === "monitor") {
+        window.location.href = "monitor/painel.html";
+      } else {
+        window.location.href = "encarregado/painel.html";
+      }
+    }, 1000);
   });
 });

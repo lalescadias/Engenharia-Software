@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   //  Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "admin") {
-    alert("Acesso restrito a administradores!");
+    mostrarAlerta("Acesso restrito a administradores!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tx = db.transaction(["atividades"], "readwrite");
       tx.objectStore("atividades").delete(id);
       tx.oncomplete = () => renderLista();
-      tx.onerror = () => alert("Erro ao remover atividade.");
+      tx.onerror = () => mostrarAlerta("Erro ao remover atividade.", "erro");
       return;
     }
 
@@ -192,11 +192,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const idMonitor = selectMonitor.value.trim();
 
     // Regras obrigatórias
-    if (!titulo) return alert("Por favor, insira o título da atividade.");
-    if (!sala) return alert("Por favor, selecione uma sala.");
-    if (!idMonitor) return alert("Por favor, selecione o monitor responsável.");
-    if (!dataInicio || !dataFim) return alert("Preencha as datas de início e fim.");
-    if (new Date(dataFim) < new Date(dataInicio)) return alert("A data de fim não pode ser anterior à de início.");
+    if (!titulo) return mostrarAlerta("Por favor, insira o título da atividade.", "erro");
+    if (!sala) return mostrarAlerta("Por favor, selecione uma sala.", "erro");
+    if (!idMonitor) return mostrarAlerta("Por favor, selecione o monitor responsável.", "erro");
+    if (!dataInicio || !dataFim) return mostrarAlerta("Preencha as datas de início e fim.", "erro");
+    if (new Date(dataFim) < new Date(dataInicio)) return mostrarAlerta("A data de fim não pode ser anterior à de início.", "erro");
 
     const payload = {
       titulo,
@@ -219,15 +219,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tx = db.transaction(["atividades"], "readwrite");
       tx.objectStore("atividades").put({ ...payload, id: editId });
       tx.oncomplete = async () => {
-        alert("Atividade atualizada com sucesso!");
+        mostrarAlerta("Atividade atualizada com sucesso!", "sucesso");
         limparForm();          // sai do modo edição e limpa
         await renderLista();   // atualiza tabela
       };
-      tx.onerror = () => alert("Erro ao atualizar a atividade.");
+      tx.onerror = () => mostrarAlerta("Erro ao atualizar a atividade.", "erro");
     } else {
       // Criar
       await addItem("atividades", payload);
-      alert("Atividade criada com sucesso!");
+      mostrarAlerta("Atividade criada com sucesso!", "sucesso");
       limparForm();            // limpa form (mantém selects prontos)
       await renderLista();
     }

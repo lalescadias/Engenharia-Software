@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "monitor") {
-    alert("Acesso restrito a monitores!");
+    mostrarAlerta("Acesso restrito a monitores!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = dataPresenca.value;
 
     if (!idAtividade || !data) {
-      alert("Selecione uma atividade e uma data!");
+      mostrarAlerta("Selecione uma atividade e uma data!", "erro");
       return;
     }
 
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = dataPresenca.value;
 
     if (!idAtividade || !data) {
-      alert("Selecione uma atividade e data antes de guardar!");
+      mostrarAlerta("Selecione uma atividade e data antes de guardar!", "erro");
       return;
     }
 
@@ -135,8 +135,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     // adiciona as novas
     registos.forEach(r => store.add(r));
 
-    tx.oncomplete = () => alert("Presenças guardadas com sucesso!");
-    tx.onerror = () => alert("Erro ao guardar presenças.");
+    tx.oncomplete = () => mostrarAlerta("Presenças guardadas com sucesso!", "sucesso");
+    tx.onerror = () => mostrarAlerta("Erro ao guardar presenças.", "erro");
   });
 
   // Inicialização

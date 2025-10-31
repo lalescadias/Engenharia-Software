@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "admin") {
-    alert("Acesso restrito a administradores!");
+    mostrarAlerta("Acesso restrito a administradores!", "erro");
     window.location.href = "../index.html";
     return;
   }

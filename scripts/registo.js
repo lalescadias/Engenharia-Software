@@ -12,27 +12,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmar = document.getElementById("confirmarSenha").value;
 
     if (senha !== confirmar) {
-      alert("As palavras-passe não coincidem!");
+      mostrarAlerta("As palavras-passe não coincidem!", "erro);");
       return;
     }
 
     // Espera o IndexedDB abrir
     if (!db) {
-      alert("Base de dados ainda a carregar, tente novamente.");
+      mostrarAlerta("Base de dados ainda a carregar, tente novamente.", "erro");
       return;
     }
 
     // Verifica se já existe
     const existente = await getByIndex("utilizadores", "email", email);
     if (existente) {
-      alert("Já existe uma conta com este email!");
+      mostrarAlerta("Já existe uma conta com este email!", "erro");
       return;
     }
 
     const novo = { nome, email, telemovel, morada, senha, perfil: "encarregado" };
 
     await addItem("utilizadores", novo);
-    alert("Conta criada com sucesso!");
-    window.location.href = "index.html";
+    mostrarAlerta("Conta criada com sucesso!", "sucesso");
+    setTimeout(() => window.location.href = "../index.html", 1200);
   });
 });

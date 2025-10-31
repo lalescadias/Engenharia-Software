@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //  Caso não esteja logado e tente abrir página privada
   const paginaPublica = path.endsWith("index.html") || path.endsWith("registo.html");
   if (!userSessao && !paginaPublica) {
-    alert("Sessão expirada. Faça login novamente.");
-    window.location.href = "../index.html";
+    mostrarAlerta("Sessão expirada. Faça login novamente.", "erro");
+    setTimeout(() => window.location.href = "../index.html", 1200);
     return;
   }
   // Redirecionamento automático por perfil
@@ -37,8 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btnSair.addEventListener("click", (e) => {
       e.preventDefault();
       localStorage.removeItem("userSessao");
-      alert("Sessão terminada!");
-      window.location.href = "../index.html";
+      mostrarAlerta("Sessão terminada!", "sucesso");
+      setTimeout(() => window.location.href = "../index.html", 1200);
     });
   }
 });
+
+

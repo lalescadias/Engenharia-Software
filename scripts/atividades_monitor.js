@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "monitor") {
-    alert("Acesso restrito a monitores!");
+    mostrarAlerta("Acesso restrito a monitores!", "erro");
     window.location.href = "../index.html";
     return;
   }

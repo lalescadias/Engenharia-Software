@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   //  Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "encarregado") {
-    alert("Acesso restrito a encarregados!");
+    mostrarAlerta("Acesso restrito a encarregados!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const idAtividade = Number(a.id);
         const idCrianca = Number(form.querySelector("select").value);
         if (!idCrianca) {
-          alert("Selecione uma criança!");
+          mostrarAlerta("Selecione uma criança!", "erro");
           return;
         }
 
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
 
         if (duplicada) {
-          alert("Esta criança já está inscrita nesta atividade!");
+          mostrarAlerta("Esta criança já está inscrita nesta atividade!", "erro");
           return;
         }
 
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
 
         await addItem("inscricoes", nova);
-        alert("Inscrição enviada com sucesso!");
+        mostrarAlerta("Inscrição enviada com sucesso!", "sucesso");
       });
 
       lista.appendChild(card);

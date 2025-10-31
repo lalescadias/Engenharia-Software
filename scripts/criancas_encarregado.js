@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
   // Segurança de sessão
- const userSessao = JSON.parse(localStorage.getItem("userSessao"));
+  const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "encarregado") {
-    alert("Acesso restrito a encarregados!");
+    mostrarAlerta("Acesso restrito a encarregados!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const autorizacaoImagem = document.getElementById("autorizacaoImagem").checked;
 
     if (!nome || !dataNascimento) {
-      alert("Preencha o nome e a data de nascimento!");
+      mostrarAlerta("Preencha o nome e a data de nascimento!", "erro");
       return;
     }
 
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const nascimento = new Date(dataNascimento);
 
     if (nascimento > hoje) {
-      alert("A data de nascimento não pode ser no futuro!");
+      mostrarAlerta("A data de nascimento não pode ser no futuro!", "erro");
       return;
     }
 
@@ -47,13 +47,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         : 0);
 
     if (idade < 3) {
-      alert("A criança deve ter pelo menos 3 anos de idade para ser registada!");
+      mostrarAlerta("A criança deve ter pelo menos 3 anos de idade para ser registada!", "erro");
       return;
     }
 
     if (modoEdicao) {
       await atualizarCrianca(modoEdicao, { nome, dataNascimento, sns, observacoes, autorizacaoImagem });
-      alert("Criança atualizada!");
+      mostrarAlerta("Criança atualizada!", "sucesso");
       cancelarEdicao();
     } else {
       await addItem("criancas", {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         ativa: true, // nova propriedade
         criadoEm: new Date().toISOString()
       });
-      alert("Criança adicionada!");
+      mostrarAlerta("Criança adicionada!", "sucesso");
     }
 
     form.reset();
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       inscricoesAtualizadas.forEach(i => store.put(i));
 
       txInscricoes.oncomplete = () => {
-        alert("Esta criança participou de atividades; foi desativada e suas inscrições foram canceladas.");
+        mostrarAlerta("Esta criança participou de atividades; foi desativada e suas inscrições foram canceladas.", "info");
         renderLista();
       };
       return;
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tx = dbx.transaction("criancas", "readwrite");
     tx.objectStore("criancas").delete(id);
     tx.oncomplete = () => {
-      alert("Criança removida com sucesso!");
+      mostrarAlerta("Criança removida com sucesso!", "sucesso");
       renderLista();
     };
   }

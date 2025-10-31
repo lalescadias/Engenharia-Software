@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "encarregado") {
-    alert("Acesso restrito a encarregados!");
+    mostrarAlerta("Acesso restrito a encarregados!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const de = dataInicio.value ? new Date(dataInicio.value) : null;
     const ate = dataFim.value ? new Date(dataFim.value) : null;
 
-    if (!idCrianca) return alert("Selecione uma criança!");
+    if (!idCrianca) return mostrarAlerta("Selecione uma criança!", "erro");
 
     const filtradas = todasPresencas.filter(p => {
       if (p.idCrianca !== idCrianca) return false;

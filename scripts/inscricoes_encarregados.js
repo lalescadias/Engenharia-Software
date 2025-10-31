@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "encarregado") {
-    alert("Acesso restrito a encarregados!");
+    mostrarAlerta("Acesso restrito a encarregados!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -73,7 +73,7 @@ lista.addEventListener("click", async (e) => {
   const inscricoes = await getAll("inscricoes");
   const insc = inscricoes.find(i => i.id === id);
   if (!insc) {
-    alert("Inscrição não encontrada!");
+    mostrarAlerta("Inscrição não encontrada!", "erro");
     return;
   }
 
@@ -93,11 +93,11 @@ lista.addEventListener("click", async (e) => {
       req.onerror = () => reject(req.error);
     });
 
-    alert("Inscrição cancelada com sucesso!");
+    mostrarAlerta("Inscrição cancelada com sucesso!", "sucesso");
     await carregarInscricoes();
   } catch (err) {
     console.error("Erro ao atualizar inscrição:", err);
-    alert("Ocorreu um erro ao cancelar a inscrição.");
+    mostrarAlerta("Ocorreu um erro ao cancelar a inscrição.", "erro");
   }
 });
   // Carregar inscrições ao iniciar

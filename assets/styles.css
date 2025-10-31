@@ -333,3 +333,47 @@ form .link-secundario {
 .btn-secundaria:hover {
   background-color: #bbb;
 }
+/* Modal de alerta */
+.modal-alerta {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-alerta-conteudo {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-alerta p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* variacao no tipo da modal */
+.modal-info .modal-alerta-conteudo { border-top: 6px solid #41bad1; }
+.modal-sucesso .modal-alerta-conteudo { border-top: 6px solid #4caf50; }
+.modal-erro .modal-alerta-conteudo { border-top: 6px solid #f44336; }
+.modal-aviso .modal-alerta-conteudo { border-top: 6px solid #ff9800; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-alerta.fechar {
+  animation: fadeOut 0.25s forwards;
+}
+@keyframes fadeOut {
+  to { opacity: 0; }
+}

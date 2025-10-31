@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "monitor") {
-    alert("Acesso restrito a monitores!");
+    mostrarAlerta("Acesso restrito a monitores!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const dataAte = inputAte.value ? new Date(inputAte.value) : null;
 
     if (!idAtividade) {
-      alert("Selecione uma atividade!");
+      mostrarAlerta("Selecione uma atividade!", "erro");
       return;
     }
 

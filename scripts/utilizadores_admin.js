@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "admin") {
-    alert("Acesso restrito a administradores!");
+    mostrarAlerta("Acesso restrito a administradores!", "erro");
     window.location.href = "../index.html";
     return;
   }
@@ -48,13 +48,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Impedir remoção de si próprio
         if (userSessao.id === id) {
-          alert("Não pode remover o seu próprio utilizador!");
+          mostrarAlerta("Não pode remover o seu próprio utilizador!", "erro");
           return;
         }
 
         // Impedir apagar o último admin
         if (perfil === "admin" && totalAdmins <= 1) {
-          alert("Não é possível remover o último administrador do sistema!");
+          mostrarAlerta("Não é possível remover o último administrador do sistema!", "erro");
           return;
         }
 
@@ -79,13 +79,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const senha = document.getElementById("senha").value.trim();
 
     if (!["monitor", "admin"].includes(perfil)) {
-      alert("Só é possível criar utilizadores do tipo 'monitor' ou 'admin'.");
+      mostrarAlerta("Só é possível criar utilizadores do tipo 'monitor' ou 'admin'.", "erro");
       return;
     }
 
     const existente = await getByIndex("utilizadores", "email", email);
     if (existente) {
-      alert("Já existe um utilizador com este email!");
+      mostrarAlerta("Já existe um utilizador com este email!", "erro");
       return;
     }
 
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       perfil
     });
 
-    alert(`Utilizador (${perfil}) criado com sucesso!`);
+    mostrarAlerta(`Utilizador (${perfil}) criado com sucesso!`, "sucesso");
     form.reset();
     renderUtilizadores();
   });
