@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
-  // Sessão
+  // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "admin") {
     alert("Acesso restrito a administradores!");

@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
-  const userSessao = JSON.parse(localStorage.getItem("userSessao"));
-  if (!userSessao) {
-    alert("Sessão expirada!");
+  // Segurança de sessão
+ const userSessao = JSON.parse(localStorage.getItem("userSessao"));
+  if (!userSessao || userSessao.perfil !== "encarregado") {
+    alert("Acesso restrito a encarregados!");
     window.location.href = "../index.html";
     return;
   }

@@ -1,10 +1,9 @@
 <!doctype html>
 <html lang="pt-PT">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Inscrições • Admin • Algazarra</title>
+  <title>Admin – Inscrições • Algazarra</title>
   <link rel="stylesheet" href="../assets/styles.css">
 </head>
 
@@ -26,34 +25,34 @@
   </header>
 
   <main class="container hero">
-    <!-- 🔹 Filtros -->
+    <!--  Filtros -->
     <section class="card">
       <h2>Gestão de Inscrições</h2>
-      <p>Confirme ou rejeite pedidos e acompanhe o estado por atividade.</p>
+      <p>Filtre e acompanhe todas as inscrições registadas.</p>
 
-      <form class="grid grid-4" style="margin-top: 1rem;">
+      <form id="formFiltros" class="grid grid-4" style="margin-top: 1rem;">
         <div>
           <label>Atividade</label>
-          <select>
-            <option>Todas</option>
+          <select id="filtroAtividade">
+            <option value="">Todas</option>
           </select>
         </div>
         <div>
           <label>Estado</label>
-          <select>
-            <option>Todos</option>
-            <option>Pendente</option>
-            <option>Confirmada</option>
-            <option>Cancelada</option>
+          <select id="filtroEstado">
+            <option value="">Todos</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Confirmada">Confirmada</option>
+            <option value="Cancelada">Cancelada</option>
           </select>
         </div>
         <div>
           <label>De</label>
-          <input type="date">
+          <input type="date" id="filtroDe">
         </div>
         <div>
           <label>Até</label>
-          <input type="date">
+          <input type="date" id="filtroAte">
         </div>
         <div class="actions" style="grid-column: span 4;">
           <button class="btn btn-primaria" type="submit">Aplicar filtros</button>
@@ -62,47 +61,23 @@
       </form>
     </section>
 
-    <!-- 🔹 Pendentes de aprovação -->
-    <section class="card">
-      <h3>Pendentes de Aprovação</h3>
-      <table class="tabela">
-        <thead>
-          <tr>
-            <th>Pediu em</th>
-            <th>Criança</th>
-            <th>Atividade</th>
-            <th>Período</th>
-            <th>Estado</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="listaPendentes">
-          <tr>
-            <td colspan="6" style="text-align:center;">A carregar...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 🔹 Todas as inscrições -->
+    <!--  Tabela -->
     <section class="card">
       <h3>Todas as Inscrições</h3>
       <table class="tabela">
         <thead>
           <tr>
-            <th>Pediu em</th>
+            <th>Data Pedido</th>
             <th>Criança</th>
+            <th>Encarregado</th>
             <th>Atividade</th>
             <th>Período</th>
             <th>Estado</th>
-            <th>Observações</th>
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody id="listaTodas">
-          <tr>
-            <td colspan="7" style="text-align:center;">A carregar...</td>
-          </tr>
+        <tbody id="listaInscricoes">
+          <tr><td colspan="7" style="text-align:center;">A carregar...</td></tr>
         </tbody>
       </table>
     </section>
@@ -115,5 +90,4 @@
   <script src="../scripts/sessao.js"></script>
   <script src="../scripts/inscricoes_admin.js"></script>
 </body>
-
 </html>

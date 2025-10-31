@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
+  //  Segurança
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "admin") {
     alert("Acesso restrito a administradores!");
@@ -8,96 +9,135 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const listaPendentes = document.getElementById("listaPendentes");
-  const listaTodas = document.getElementById("listaTodas");
+  //  Referências
+  const lista = document.getElementById("listaInscricoes");
+  const filtroAtividade = document.getElementById("filtroAtividade");
+  const filtroEstado = document.getElementById("filtroEstado");
+  const filtroDe = document.getElementById("filtroDe");
+  const filtroAte = document.getElementById("filtroAte");
+  const formFiltros = document.getElementById("formFiltros");
 
-  async function renderInscricoes() {
-    const inscricoes = await getAll("inscricoes");
-    const criancas = await getAll("criancas");
-    const atividades = await getAll("atividades");
-    const utilizadores = await getAll("utilizadores");
+  let todasInscricoes = [];
+  let criancas = [];
+  let atividades = [];
+  let utilizadores = [];
 
-    listaPendentes.innerHTML = "";
-    listaTodas.innerHTML = "";
+  //  Carregar filtros
+  async function carregarFiltros() {
+    atividades = await getAll("atividades");
+    filtroAtividade.innerHTML = `<option value="">Todas</option>`;
+    atividades.forEach(a => {
+      const opt = document.createElement("option");
+      opt.value = a.id;
+      opt.textContent = a.titulo;
+      filtroAtividade.appendChild(opt);
+    });
+  }
 
-    if (inscricoes.length === 0) {
-      listaPendentes.innerHTML = `<tr><td colspan="6" style="text-align:center;">Nenhuma inscrição registada.</td></tr>`;
-      listaTodas.innerHTML = `<tr><td colspan="7" style="text-align:center;">Nenhuma inscrição registada.</td></tr>`;
+  //  Renderizar tabela
+  async function renderTabela(filtradas) {
+    lista.innerHTML = "";
+
+    if (filtradas.length === 0) {
+      lista.innerHTML = `<tr><td colspan="7" style="text-align:center;">Nenhuma inscrição encontrada.</td></tr>`;
       return;
     }
 
-    inscricoes.forEach((i) => {
-      const crianca = criancas.find((c) => c.id === i.idCrianca);
-      const atividade = atividades.find((a) => a.id === i.idAtividade);
-      const encarregado = utilizadores.find((u) => u.id === crianca?.idEncarregado);
+    filtradas.forEach(i => {
+      const crianca = criancas.find(c => c.id === i.idCrianca);
+      const atividade = atividades.find(a => a.id === i.idAtividade);
+      const encarregado = utilizadores.find(u => u.id === crianca?.idEncarregado);
 
-      const nomeCrianca = crianca?.nome || "—";
-      const nomeAtividade = atividade?.titulo || "—";
-      const nomeEncarregado = encarregado?.nome || "—";
-      const dataPedido = new Date(i.dataInscricao).toLocaleDateString("pt-PT");
       const inicio = atividade?.dataInicio ? new Date(atividade.dataInicio).toLocaleDateString("pt-PT", { day: "2-digit", month: "short" }) : "-";
       const fim = atividade?.dataFim ? new Date(atividade.dataFim).toLocaleDateString("pt-PT", { day: "2-digit", month: "short" }) : "-";
+      const dataPed = i.dataInscricao ? new Date(i.dataInscricao).toLocaleDateString("pt-PT") : "-";
 
-      let estadoClasse = "estado-pendente";
-      if (i.estado === "Confirmada") estadoClasse = "estado-confirmada";
-      if (i.estado === "Cancelada") estadoClasse = "estado-cancelada";
+      const estadoClasse =
+        i.estado === "Confirmada" ? "estado-confirmada" :
+        i.estado === "Cancelada" ? "estado-cancelada" : "estado-pendente";
 
-      const linha = `
-        <tr>
-          <td>${dataPedido}</td>
-          <td>${nomeCrianca}</td>
-          <td>${nomeAtividade}</td>
-          <td>${inicio} – ${fim}</td>
-          <td><span class="etiqueta ${estadoClasse}">${i.estado}</span></td>
-          <td>
-            ${
-              i.estado === "Pendente"
-                ? `
-                <button class="btn btn-primaria aprovar" data-id="${i.id}">Confirmar</button>
-                <button class="btn btn-perigo rejeitar" data-id="${i.id}">Rejeitar</button>`
-                : "—"
-            }
-          </td>
-        </tr>
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${dataPed}</td>
+        <td>${crianca?.nome || "—"}</td>
+        <td>${encarregado?.nome || "—"}</td>
+        <td>${atividade?.titulo || "—"}</td>
+        <td>${inicio} – ${fim}</td>
+        <td><span class="etiqueta ${estadoClasse}">${i.estado}</span></td>
+        <td>
+          ${i.estado === "Pendente"
+            ? `<button class="btn btn-primaria aprovar" data-id="${i.id}">Confirmar</button>
+               <button class="btn btn-perigo rejeitar" data-id="${i.id}">Rejeitar</button>`
+            : "—"}
+        </td>
       `;
-
-      // Adiciona à tabela certa
-      if (i.estado === "Pendente") {
-        listaPendentes.insertAdjacentHTML("beforeend", linha);
-      }
-      listaTodas.insertAdjacentHTML("beforeend", linha);
+      lista.appendChild(tr);
     });
 
-    // Eventos
-    document.querySelectorAll(".aprovar").forEach((btn) => {
+    // Eventos para aprovar/rejeitar
+    document.querySelectorAll(".aprovar").forEach(btn => {
       btn.onclick = async () => {
-        const id = Number(btn.dataset.id);
-        await atualizarEstado(id, "Confirmada");
-        renderInscricoes();
+        await atualizarEstado(Number(btn.dataset.id), "Confirmada");
+        await carregarInscricoes();
       };
     });
 
-    document.querySelectorAll(".rejeitar").forEach((btn) => {
+    document.querySelectorAll(".rejeitar").forEach(btn => {
       btn.onclick = async () => {
-        const id = Number(btn.dataset.id);
-        await atualizarEstado(id, "Cancelada");
-        renderInscricoes();
+        await atualizarEstado(Number(btn.dataset.id), "Cancelada");
+        await carregarInscricoes();
       };
     });
   }
 
-  async function atualizarEstado(id, novoEstado) {
-    const tx = db.transaction("inscricoes", "readwrite");
-    const store = tx.objectStore("inscricoes");
+  //  Aplicar filtros
+  function aplicarFiltros() {
+    let filtradas = [...todasInscricoes];
 
+    const idAtividade = filtroAtividade.value;
+    const estado = filtroEstado.value;
+    const de = filtroDe.value ? new Date(filtroDe.value) : null;
+    const ate = filtroAte.value ? new Date(filtroAte.value) : null;
+
+    if (idAtividade) filtradas = filtradas.filter(i => i.idAtividade == idAtividade);
+    if (estado) filtradas = filtradas.filter(i => i.estado === estado);
+    if (de) filtradas = filtradas.filter(i => new Date(i.dataInscricao) >= de);
+    if (ate) filtradas = filtradas.filter(i => new Date(i.dataInscricao) <= ate);
+
+    renderTabela(filtradas);
+  }
+
+  //  Atualizar estado
+  async function atualizarEstado(id, novoEstado) {
+    const tx = db.transaction(["inscricoes"], "readwrite");
+    const store = tx.objectStore("inscricoes");
     const req = store.get(id);
+
     req.onsuccess = () => {
-      const inscricao = req.result;
-      if (!inscricao) return;
-      inscricao.estado = novoEstado;
-      store.put(inscricao);
+      const insc = req.result;
+      if (!insc) return;
+      insc.estado = novoEstado;
+      store.put(insc);
     };
   }
 
-  await renderInscricoes();
+  //  Carregar tudo
+  async function carregarInscricoes() {
+    todasInscricoes = await getAll("inscricoes");
+    criancas = await getAll("criancas");
+    atividades = await getAll("atividades");
+    utilizadores = await getAll("utilizadores");
+
+    aplicarFiltros();
+  }
+
+  //  Eventos
+  formFiltros.addEventListener("submit", e => {
+    e.preventDefault();
+    aplicarFiltros();
+  });
+
+  //  Inicialização
+  await carregarFiltros();
+  await carregarInscricoes();
 });

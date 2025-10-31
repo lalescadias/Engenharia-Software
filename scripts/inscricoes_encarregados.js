@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
+  // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "encarregado") {
     alert("Acesso restrito a encarregados!");

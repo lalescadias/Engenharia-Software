@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
-  // Sessão e acesso
+  // Segurança de sessão
   const userSessao = JSON.parse(localStorage.getItem("userSessao"));
   if (!userSessao || userSessao.perfil !== "monitor") {
     alert("Acesso restrito a monitores!");

@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await dbReady;
 
+  // Segurança de sessão/  Segurança de sessão
+  const userSessao = JSON.parse(localStorage.getItem("userSessao"));
+  if (!userSessao || userSessao.perfil !== "admin") {
+    alert("Acesso restrito a administradores!");
+    window.location.href = "../index.html";
+    return;
+  }
+
   const params = new URLSearchParams(window.location.search);
   const idCrianca = Number(params.get("id"));
 
@@ -18,10 +26,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 🔹 Busca o encarregado pelo id
+  //  Busca o encarregado pelo id
   const encarregado = utilizadores.find(u => u.id === crianca.idEncarregado);
 
-  // 🔹 Calcular idade
+  //  Calcular idade
   let idade = "—";
   if (crianca.dataNascimento) {
     const nasc = new Date(crianca.dataNascimento);
