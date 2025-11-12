@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await addItem("utilizadores", novo);
     mostrarAlerta("Conta criada com sucesso!", "sucesso");
-    setTimeout(() => window.location.href = "../index.html", 1200);
+    setTimeout(() => window.location.href = "index.html", 1200);
+
   });
 });
