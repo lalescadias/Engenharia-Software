@@ -64,7 +64,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // carrega apenas perfis "monitor"
   async function carregarMonitores() {
     const utilizadores = await getAll("utilizadores");
-    const monitores = utilizadores.filter(u => u.perfil === "monitor");
+    const monitores = utilizadores.filter(u =>
+      u.perfil === "monitor" && u.ativo !== false
+    );
     selectMonitor.innerHTML = `<option value="">Selecione...</option>`;
     monitores.forEach(m => {
       const opt = document.createElement("option");
@@ -150,11 +152,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         selectSala.value = a.sala;
       }
       if (a.idMonitor) {
-        if (![...selectMonitor.options].some(o => Number(o.value) === Number(a.idMonitor))) {
-          const opt = new Option(a.monitorNome || `Monitor #${a.idMonitor}`, a.idMonitor);
-          selectMonitor.add(opt);
+        const utilizadores = await getAll("utilizadores");
+        const monitor = utilizadores.find(u => u.id === a.idMonitor);
+
+        if (monitor && monitor.perfil === "monitor" && monitor.ativo !== false) {
+          // só seleciona se for um monitor ativo
+          selectMonitor.value = String(a.idMonitor);
+        } else {
+          // caso contrário, força selecionar novamente
+          selectMonitor.selectedIndex = 0;
+          mostrarAlerta(
+            "O monitor originalmente atribuído a esta atividade encontra-se desativado. Selecione um monitor ativo.",
+            "info"
+          );
         }
-        selectMonitor.value = String(a.idMonitor);
       }
 
       form.dataset.editando = String(a.id);

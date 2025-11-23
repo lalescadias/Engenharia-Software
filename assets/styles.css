@@ -383,3 +383,13 @@ form .link-secundario {
   gap: 10px;
   margin-top: 1rem;
 }
+
+/* Botões correcao layout */
+.tabela .btn {
+  min-width: 100px;
+  text-align: center;
+
+}
+.tabela .btn-destaque {
+  margin-bottom: 2px;  
+}
