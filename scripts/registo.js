@@ -29,6 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Validação do telemóvel (formato internacional)
+    const regexTelemovel = /^\+\d{1,3}\d{7,12}$/;
+
+
+    if (!regexTelemovel.test(telemovel)) {
+      mostrarAlerta("Formato inválido. Use o padrão internacional, ex: +351912345678.", "erro");
+      return;
+    }
+
     const novo = { nome, email, telemovel, morada, senha, perfil: "encarregado" };
 
     await addItem("utilizadores", novo);
