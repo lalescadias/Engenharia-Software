@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (el) el.value = "";
       });
       const he = byId("horaEntrada"); if (he) he.value = "09:00";
-      const hs = byId("horaSaida");   if (hs) hs.value = "17:00";
-      const lot = byId("lotacao");    if (lot) lot.value = "20";
+      const hs = byId("horaSaida"); if (hs) hs.value = "17:00";
+      const lot = byId("lotacao"); if (lot) lot.value = "20";
     }
 
     // Mantém selects carregados e volta para “Selecione…”
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const titulo = document.getElementById("titulo").value.trim();
     const descricao = document.getElementById("descricao").value.trim();
-    const imagem = document.getElementById("imagem").value.trim();
+    var imagem = document.getElementById("imagem").value.trim();
     const dataInicio = document.getElementById("dataInicio").value;
     const dataFim = document.getElementById("dataFim").value;
     const horaEntrada = document.getElementById("horaEntrada").value;
@@ -198,6 +198,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!idMonitor) return mostrarAlerta("Por favor, selecione o monitor responsável.", "erro");
     if (!dataInicio || !dataFim) return mostrarAlerta("Preencha as datas de início e fim.", "erro");
     if (new Date(dataFim) < new Date(dataInicio)) return mostrarAlerta("A data de fim não pode ser anterior à de início.", "erro");
+    if (!imagem) {
+      const seed = "algazarra_" + Date.now();
+      imagem = `https://picsum.photos/seed/${seed}/600/300`;
+    }
 
     const payload = {
       titulo,
