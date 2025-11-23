@@ -118,7 +118,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       idCrianca: Number(tr.dataset.idCrianca),
       data,
       presente: tr.querySelector(".checkPresente").checked,
-      observacoes: tr.querySelector(".obs").value.trim()
+      observacoes: tr.querySelector(".obs").value.trim(),
+      idMonitor: userSessao.id   
     }));
 
     // elimina presenças antigas do mesmo dia/atividade antes de gravar novamente

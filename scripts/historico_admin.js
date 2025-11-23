@@ -46,39 +46,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Aplicar Filtros
-  function aplicarFiltros() {
-    const atividadeSelecionada = selectAtividade.value.trim();
-    const monitorSelecionado = selectMonitor.value.trim();
-    const de = inputDe.value ? new Date(inputDe.value) : null;
-    const ate = inputAte.value ? new Date(inputAte.value) : null;
+ function aplicarFiltros() {
+  const atividadeSelecionada = selectAtividade.value.trim();
+  const monitorSelecionado = selectMonitor.value.trim();
+  const de = inputDe.value ? new Date(inputDe.value) : null;
+  const ate = inputAte.value ? new Date(inputAte.value) : null;
 
-    let filtradas = [...presencas];
+  let filtradas = [...presencas];
 
-    // Filtro por atividade
-    if (atividadeSelecionada) {
-      filtradas = filtradas.filter(p => p.idAtividade == atividadeSelecionada);
-    }
-
-    // Filtro por monitor
-    if (monitorSelecionado) {
-      filtradas = filtradas.filter(p => {
-        const atividade = atividades.find(a => a.id === p.idAtividade);
-        return atividade && atividade.idMonitor == monitorSelecionado;
-      });
-    }
-
-    // Filtro por data
-    if (de || ate) {
-      filtradas = filtradas.filter(p => {
-        const dataP = new Date(p.data);
-        if (de && dataP < de) return false;
-        if (ate && dataP > ate) return false;
-        return true;
-      });
-    }
-
-    renderTabela(filtradas);
+  // Filtro por atividade
+  if (atividadeSelecionada) {
+    filtradas = filtradas.filter(p => p.idAtividade == atividadeSelecionada);
   }
+
+  // Filtro por monitor REAL (quem marcou a presença)
+  if (monitorSelecionado) {
+    filtradas = filtradas.filter(p => p.idMonitor == monitorSelecionado);
+  }
+
+  // Filtro por data
+  if (de || ate) {
+    filtradas = filtradas.filter(p => {
+      const dataP = new Date(p.data);
+      if (de && dataP < de) return false;
+      if (ate && dataP > ate) return false;
+      return true;
+    });
+  }
+
+  renderTabela(filtradas);
+}
 
   // Renderização
   function renderTabela(listaPresencas) {
@@ -91,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     listaPresencas.forEach(p => {
       const atividade = atividades.find(a => a.id === p.idAtividade);
-      const monitor = utilizadores.find(u => u.id === atividade?.idMonitor);
+      const monitor = utilizadores.find(u => u.id === p.idMonitor);
       const crianca = criancas.find(c => c.id === p.idCrianca);
 
       const tr = document.createElement("tr");
