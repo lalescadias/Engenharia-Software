@@ -393,3 +393,24 @@ form .link-secundario {
 .tabela .btn-destaque {
   margin-bottom: 2px;  
 }
+
+/* Scroll tabela */
+.tabela-scroll {
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Scroll bonito e discreto */
+.tabela-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tabela-scroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 6px;
+}
+
+.tabela-scroll::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
