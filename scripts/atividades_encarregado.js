@@ -36,7 +36,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       const card = document.createElement("article");
       card.className = "card";
 
-      const imgUrl = a.imagem && a.imagem.trim() !== "" ? a.imagem : "https://picsum.photos/seed/atl/600/300";
+      const imgUrl = a.imagem && a.imagem.trim() !== ""
+        ? a.imagem
+        : `https://picsum.photos/seed/atividade${a.id}/600/300`;
 
       card.innerHTML = `
         <img src="${imgUrl}" alt="Imagem da atividade"
