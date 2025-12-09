@@ -414,3 +414,24 @@ form .link-secundario {
 .tabela-scroll::-webkit-scrollbar-thumb:hover {
   background: #b0b0b0;
 }
+
+/* Painel card estilos */
+.painel-card {
+  text-align: center;
+}
+
+.painel-card .icon {
+  margin-bottom: 12px;
+}
+
+.painel-card svg {
+  width: 40px;
+  height: 40px;
+  opacity: .85;
+  transition: .2s;
+}
+
+.painel-card:hover svg {
+  opacity: 1;
+  transform: scale(1.05);
+}
