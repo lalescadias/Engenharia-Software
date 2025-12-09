@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const card = document.createElement("article");
       card.className = "card";
 
-      const imgUrl = a.imagem && a.imagem.trim() !== "" ? a.imagem: "https://picsum.photos/seed/atl/600/300";
+      const imgUrl = a.imagem && a.imagem.trim() !== "" ? a.imagem : "https://picsum.photos/seed/atl/600/300";
 
 
       card.innerHTML = `
@@ -67,8 +67,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         const inscricoes = await getAll("inscricoes");
+        const bloqueados = ["Pendente", "Confirmada"];
+
         const duplicada = inscricoes.some(
-          i => i.idCrianca === idCrianca && i.idAtividade === idAtividade
+          i =>
+            i.idCrianca === idCrianca &&
+            i.idAtividade === idAtividade &&
+            bloqueados.includes(i.estado)
         );
 
         if (duplicada) {
