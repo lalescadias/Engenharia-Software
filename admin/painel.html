@@ -9,52 +9,115 @@
 </head>
 
 <body>
-   <header class="header">
-  <nav class="nav container">
-    <div class="marca"><span class="logo"></span> OTL Algazarra</div>
-      <div class="actions">
-      <a href="painel.html" class="ativo">Painel</a>
-      <a href="atividades.html">Atividades</a>
-      <a href="criancas.html">Crianças</a>
-      <a href="inscricoes.html" >Inscrições</a>
-      <a href="historico.html">Histórico</a>
-      <a href="salas.html">Salas</a>
-      <a href="utilizadores.html">Utilizadores</a>
-      <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
+    <header class="header">
+        <nav class="nav container">
+            <div class="marca"><span class="logo"></span> OTL Algazarra</div>
+            <div class="actions">
+                <a href="painel.html" class="ativo">Painel</a>
+                <a href="atividades.html">Atividades</a>
+                <a href="criancas.html">Crianças</a>
+                <a href="inscricoes.html">Inscrições</a>
+                <a href="historico.html">Histórico</a>
+                <a href="salas.html">Salas</a>
+                <a href="utilizadores.html">Utilizadores</a>
+                <a href="#" id="btnSair" class="btn btn-ghost">Sair</a>
 
-    </div>
-  </nav>
-</header>
+            </div>
+        </nav>
+    </header>
     <main class="container hero">
         <div class="grid grid-3">
             <section class="card">
-                <h2>Atividades</h2>
-                <p>Crie, edite e atribua salas e monitores.</p>
-                <a class="btn btn-primaria" href="atividades.html">Gerir atividades</a>
+                <article class="card painel-card">
+                    <div class="icon">
+                        <svg width="42" height="42" fill="#3a3a3a" viewBox="0 0 24 24">
+                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 
+                            .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 
+                            2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" />
+                        </svg>
+
+
+                    </div>
+                    <h2>Atividades</h2>
+                    <p>Crie, edite e atribua salas e monitores.</p>
+                    <a class="btn btn-primaria" href="atividades.html">Gerir atividades</a>
+                </article>
             </section>
 
             <section class="card">
-                <h2>Crianças</h2>
-                <p>Consulte a lista de crianças inscritas e respetivas atividades.</p>
-                <a class="btn btn-primaria" href="criancas.html">Ver crianças</a>
+
+                <article class="card painel-card">
+                    <div class="icon">
+                        <svg width="32" height="32" fill="#3a3a3a" viewBox="0 0 24 24">
+                            <path
+                                d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h7v-3.5c0-2.33-4.67-3.5-8-3.5z" />
+                        </svg>
+
+                    </div>
+
+                    <h2>Crianças</h2>
+                    <p>Consulte a lista de crianças inscritas e respetivas atividades.</p>
+                    <a class="btn btn-primaria" href="criancas.html">Ver crianças</a>
+                </article>
             </section>
 
             <section class="card">
-                <h2>Histórico</h2>
-                <p>Consulte presenças passadas de todas as atividades.</p>
-                <a class="btn btn-primaria" href="historico.html">Ver histórico</a>
+                <article class="card painel-card">
+                    <div class="icon">
+                        <svg width="42" height="42" fill="#3a3a3a" viewBox="0 0 24 24">
+                            <path d="M12 8v5h4l.97-1.03L13 
+                            12V8m0-6C6.5 2 2 6.5 2 
+                            12h2l-3 3-3-3h2c0-4.42 
+                            3.58-8 8-8s8 3.58 8 
+                            8-3.58 8-8 8c-2.21 0-4.21-.9-5.66-2.34L5.76 
+                            17.1C7.58 19 9.96 20 12 
+                            20c5.5 0 10-4.5 10-10S17.5 
+                            2 12 2z" />
+                        </svg>
+
+
+
+                    </div>
+                    <h2>Histórico</h2>
+                    <p>Consulte presenças passadas de todas as atividades.</p>
+                    <a class="btn btn-primaria" href="historico.html">Ver histórico</a>
+                </article>
             </section>
 
             <section class="card">
-                <h2>Salas</h2>
-                <p>Crie e organize as salas disponíveis no ATL.</p>
-                <a class="btn btn-primaria" href="salas.html">Gerir salas</a>
+                <article class="card painel-card">
+                    <div class="icon">
+                        <svg width="42" height="42" fill="#3a3a3a" viewBox="0 0 24 24">
+                            <path d="M19 19V3H5v16H3v2h18v-2h-2zm-2 
+                            0H7V5h10v14z" />
+                        </svg>
+
+
+
+                    </div>
+                    <h2>Salas</h2>
+                    <p>Crie e organize as salas disponíveis no ATL.</p>
+                    <a class="btn btn-primaria" href="salas.html">Gerir salas</a>
+                </article>
             </section>
 
             <section class="card">
-                <h2>Utilizadores</h2>
-                <p>Crie e edite contas de monitores e administradores.</p>
-                <a class="btn btn-primaria" href="utilizadores.html">Gerir utilizadores</a>
+                <article class="card painel-card">
+                    <div class="icon">
+                        <svg width="42" height="42" fill="#3a3a3a" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 
+                        4-4s-1.79-4-4-4-4 1.79-4 
+                        4 1.79 4 4 4zm0 2c-2.67 0-8 
+                        1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+
+
+
+                    </div>
+                    <h2>Utilizadores</h2>
+                    <p>Crie e edite contas de monitores e administradores.</p>
+                    <a class="btn btn-primaria" href="utilizadores.html">Gerir utilizadores</a>
+                </article>
             </section>
         </div>
     </main>
@@ -62,7 +125,7 @@
     <footer class="footer">© Algazarra OTL</footer>
     <!-- Scripts -->
     <script src="../scripts/alerta.js"></script>
-  <script src="../scripts/sessao.js"></script>
+    <script src="../scripts/sessao.js"></script>
 
 </body>
 
