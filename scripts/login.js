@@ -14,11 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const user = await getByIndex("utilizadores", "email", email);
 
-    if (!user || user.senha !== senha) {
+    
+
+    if (!user || !(await verifyPassword(senha, user))) {
       mostrarAlerta("Credenciais inválidas.", "erro");
       return;
     }
-
     localStorage.setItem("userSessao", JSON.stringify(user));
     mostrarAlerta(`Bem-vindo(a), ${user.nome}!`, "sucesso");
 

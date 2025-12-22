@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formRegisto");
 
@@ -38,9 +39,21 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const novo = { nome, email, telemovel, morada, senha, perfil: "encarregado" };
+  
+    const credenciais = await hashPassword(senha);
+
+    const novo = {
+      nome,
+      email,
+      telemovel,
+      morada,
+      perfil: "encarregado",
+      ativo: true,
+      ...credenciais
+    };
 
     await addItem("utilizadores", novo);
+
     mostrarAlerta("Conta criada com sucesso!", "sucesso");
     setTimeout(() => window.location.href = "index.html", 1200);
 
