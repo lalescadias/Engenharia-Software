@@ -97,16 +97,19 @@ dbReady.then(async () => {
   const existeAdmin = utilizadores.some(u => u.perfil === "admin");
 
   if (!existeAdmin) {
+    const cred = await hashPassword("admin123"); // <- vem do security.js
+
     const admin = {
       nome: "Administrador",
       email: "admin@algazarra.pt",
       telemovel: "999999999",
       morada: "Sede Algazarra",
-      senha: "admin123",
-      perfil: "admin"
+      perfil: "admin",
+      ativo: true,
+      ...cred // passwordHash, passwordSalt, iterations
     };
+
     await addItem("utilizadores", admin);
     console.log("Admin criado: admin@algazarra.pt / admin123");
   }
 });
-

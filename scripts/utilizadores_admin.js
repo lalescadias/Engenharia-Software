@@ -46,11 +46,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td style="text-transform:capitalize;">${u.perfil}</td>
         <td>${estado}</td>
         <td>
-          ${
-            u.ativo === false
-              ? `<button class="btn btn-primaria ativar" data-id="${u.id}">Ativar</button>`
-              : `<button class="btn btn-perigo btn-remover" data-id="${u.id}" data-perfil="${u.perfil}">Remover</button>`
-          }
+          ${u.ativo === false
+          ? `<button class="btn btn-primaria ativar" data-id="${u.id}">Ativar</button>`
+          : `<button class="btn btn-perigo btn-remover" data-id="${u.id}" data-perfil="${u.perfil}">Remover</button>`
+        }
         </td>
       `;
 
@@ -171,14 +170,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
+    const cred = await hashPassword(senha);
+
     await addItem("utilizadores", {
       nome,
       email,
       telemovel,
       morada,
-      senha,
       perfil,
-      ativo: true // NOVO
+      ativo: true,
+      ...cred // passwordHash, passwordSalt, iterations
     });
 
     mostrarAlerta(`Utilizador (${perfil}) criado com sucesso!`, "sucesso");
